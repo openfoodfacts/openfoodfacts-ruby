@@ -1,5 +1,11 @@
 # OpenFoodFacts
 
+[![Gem Version](https://badge.fury.io/rb/openfoodfacts.svg)](http://badge.fury.io/rb/openfoodfacts)
+[![Build Status](https://travis-ci.org/nicolasleger/openfoodfacts-ruby.svg)](https://travis-ci.org/nicolasleger/openfoodfacts-ruby)
+[![Dependency Status](https://gemnasium.com/nicolasleger/openfoodfacts-ruby.svg)](https://gemnasium.com/nicolasleger/openfoodfacts-ruby)
+[![Code Climate](https://codeclimate.com/github/nicolasleger/openfoodfacts-ruby/badges/gpa.svg)](https://codeclimate.com/github/nicolasleger/openfoodfacts-ruby)
+[![Coverage Status](https://coveralls.io/repos/nicolasleger/openfoodfacts-ruby/badge.svg)](https://coveralls.io/r/nicolasleger/openfoodfacts-ruby)
+
 API Wrapper for [OpenFoodFacts](https://openfoodfacts.org/), the open database about food.
 
 ## Installation
