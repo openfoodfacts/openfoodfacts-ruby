@@ -2,12 +2,25 @@ require_relative 'openfoodfacts/product'
 require_relative 'openfoodfacts/version'
 
 require 'json'
+require 'nokogiri'
 require 'open-uri'
 
 module Openfoodfacts
   DEFAULT_LOCALE = 'en'
 
   class << self
+
+    # Get locales
+    #
+    def locales
+      url = "http://openfoodfacts.org/"
+      body = open(url).read
+      dom = Nokogiri.parse(body)
+
+      dom.css('ul li a').map { |locale_link|
+        locale_link.attr('href')[/^https?:\/\/([^.]+)\./i,1]
+      }.uniq.sort
+    end
 
     # Get product
     #
