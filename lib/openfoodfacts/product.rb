@@ -33,7 +33,6 @@ module Openfoodfacts
         results_dom = Nokogiri::HTML.fragment(results_jqm)
         
         results_dom.css('li:not(#loadmore)').map do |product|
-          puts "product #{product.inner_html}"
           link = product.css('a').first
           code = link.attr('href').split('=').last
           image_url = product.css('img').first.attr('src')
