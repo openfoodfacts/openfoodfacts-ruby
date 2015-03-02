@@ -5,7 +5,7 @@ class TestOpenfoodfacts < Minitest::Test
     refute_nil ::Openfoodfacts::VERSION
   end
 
-  def test_it_fetches_product
+  def test_it_fetches_locales
     VCR.use_cassette("index") do
       locales = ::Openfoodfacts::locales
       assert_includes locales, "world"
@@ -18,6 +18,24 @@ class TestOpenfoodfacts < Minitest::Test
     product_code = "3029330003533"
     VCR.use_cassette("product_#{product_code}") do
       assert_equal ::Openfoodfacts.product(product_code).code, product_code
+    end
+  end
+
+  def test_that_it_search
+    term = "Chocolate"
+    first_product = nil
+
+    VCR.use_cassette("search_#{term}") do
+      products = ::Openfoodfacts.search(term, page_size: 42)
+      first_product = products.first
+
+      assert_match products.last["product_name"], /#{term}/i
+      assert_match ::Openfoodfacts.search(term).last["product_name"], /#{term}/i
+      assert_equal products.size, 42
+    end
+
+    VCR.use_cassette("search_#{term}_1_000_000") do
+      refute_equal ::Openfoodfacts.search(term, page: 2).first.code, first_product.code
     end
   end
 end
