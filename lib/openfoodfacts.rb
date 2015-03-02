@@ -39,11 +39,5 @@ module Openfoodfacts
       Product.url(barcode, locale)
     end
 
-    # Search products 
-    #
-    def product_search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n')
-      Product.search(terms, locale: locale, page: page, page_size: page_size, sort_by: sort_by)
-    end
-
   end
 end

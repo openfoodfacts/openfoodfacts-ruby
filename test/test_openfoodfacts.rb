@@ -17,7 +17,8 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_product
     product_code = "3029330003533"
     VCR.use_cassette("product_#{product_code}") do
-      assert_equal ::Openfoodfacts.product(product_code).code, product_code
+      assert_equal ::Openfoodfacts::Product.get(product_code).code, product_code
+      assert_equal ::Openfoodfacts.product(product_code).code, product_code # Backward compatibility
     end
   end
 
@@ -26,16 +27,16 @@ class TestOpenfoodfacts < Minitest::Test
     first_product = nil
 
     VCR.use_cassette("search_#{term}") do
-      products = ::Openfoodfacts.search(term, page_size: 42)
+      products = ::Openfoodfacts::Product.search(term, page_size: 42)
       first_product = products.first
 
       assert_match products.last["product_name"], /#{term}/i
-      assert_match ::Openfoodfacts.search(term).last["product_name"], /#{term}/i
+      assert_match ::Openfoodfacts::Product.search(term).last["product_name"], /#{term}/i
       assert_equal products.size, 42
     end
 
     VCR.use_cassette("search_#{term}_1_000_000") do
-      refute_equal ::Openfoodfacts.search(term, page: 2).first.code, first_product.code
+      refute_equal ::Openfoodfacts::Product.search(term, page: 2).first.code, first_product.code
     end
   end
 end
