@@ -30,13 +30,13 @@ module Openfoodfacts
     # Get product
     #
     def product(barcode, locale: DEFAULT_LOCALE)
-      Product.get(barcode, locale)
+      Product.get(barcode, locale: locale)
     end
 
     # Return product API URL
     #
     def product_url(barcode, locale: DEFAULT_LOCALE)
-      Product.url(barcode, locale)
+      Product.url(barcode, locale: locale)
     end
 
   end
