@@ -23,7 +23,7 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_that_it_search
-    term = "Chocolate"
+    term = "Chocolat"
     first_product = nil
 
     VCR.use_cassette("search_#{term}") do
