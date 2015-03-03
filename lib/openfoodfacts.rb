@@ -6,9 +6,14 @@ require 'nokogiri'
 require 'open-uri'
 
 module Openfoodfacts
-  DEFAULT_LOCALE = 'en'
+  DEFAULT_LOCALE = 'world'
 
   class << self
+
+    # Return ocale from link
+    def locale_from_link(link)
+      link[/^https?:\/\/([^.]+)\./i, 1]
+    end
 
     # Get locales
     #
@@ -18,24 +23,20 @@ module Openfoodfacts
       dom = Nokogiri.parse(body)
 
       dom.css('ul li a').map { |locale_link|
-        locale_link.attr('href')[/^https?:\/\/([^.]+)\./i,1]
+        locale_from_link(locale_link.attr('href'))
       }.uniq.sort
     end
 
     # Get product
     #
     def product(barcode, locale: DEFAULT_LOCALE)
-      url = product_url(barcode, locale: locale)
-      json = open(url).read
-      hash = JSON.parse(json)
-
-      Product.new(hash["product"]) if !hash["status"].nil? && hash["status"] == 1
+      Product.get(barcode, locale: locale)
     end
 
-    # Get product API URL
+    # Return product API URL
     #
     def product_url(barcode, locale: DEFAULT_LOCALE)
-      "http://#{locale}.openfoodfacts.org/api/v0/produit/#{barcode}.json"
+      Product.url(barcode, locale: locale)
     end
 
   end
