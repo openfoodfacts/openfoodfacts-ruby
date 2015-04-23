@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "OpenFoodFacts API Wrapper"
   spec.description   = "OpenFoodFacts API Wrapper, the open database about food."
-  spec.homepage      = "https://github.com/nicolasleger/openfoodfacts-ruby"
+  spec.homepage      = "https://github.com/openfoodfacts/openfoodfacts-ruby"
   spec.license       = "MIT"
 
   spec.files         = Dir['Rakefile', '{features,lib,test}/**/*', 'README*', 'LICENSE*']
