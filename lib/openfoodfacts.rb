@@ -10,7 +10,8 @@ module Openfoodfacts
 
   class << self
 
-    # Return ocale from link
+    # Return locale from link
+    #
     def locale_from_link(link)
       link[/^https?:\/\/([^.]+)\./i, 1]
     end
