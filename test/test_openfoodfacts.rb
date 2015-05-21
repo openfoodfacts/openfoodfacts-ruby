@@ -1,9 +1,14 @@
 require_relative 'minitest_helper'
 
 class TestOpenfoodfacts < Minitest::Test
+
+  # Gem
+
   def test_that_it_has_a_version_number
     refute_nil ::Openfoodfacts::VERSION
   end
+
+  # Locale
 
   def test_it_fetches_locales
     VCR.use_cassette("index") do
@@ -13,6 +18,17 @@ class TestOpenfoodfacts < Minitest::Test
       assert_includes locales, "be-fr"
     end
   end
+
+  # User
+
+  def test_it_login_user
+    VCR.use_cassette("login_user", record: :once, match_requests_on: [:host, :path]) do
+      user = ::Openfoodfacts::User.login("wrong", "absolutely")
+      assert_nil user
+    end
+  end
+
+  # Product
 
   def test_it_fetches_product
     product_code = "3029330003533"
@@ -42,4 +58,5 @@ class TestOpenfoodfacts < Minitest::Test
       refute_equal ::Openfoodfacts::Product.search(term, page: 2).first.code, first_product.code
     end
   end
+
 end
