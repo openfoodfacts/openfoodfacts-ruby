@@ -4,6 +4,7 @@ module Openfoodfacts
     class << self
 
       # Login
+      # WARNING SECURITY: It is not made throught HTTPS Secure so password can be read on the way.
       #
       def login(user_id, password, locale: Openfoodfacts::DEFAULT_LOCALE)
         uri = URI("http://#{locale}.openfoodfacts.org/cgi/session.pl")
