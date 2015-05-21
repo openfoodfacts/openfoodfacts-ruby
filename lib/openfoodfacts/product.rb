@@ -33,18 +33,23 @@ module Openfoodfacts
         results_dom = Nokogiri::HTML.fragment(results_jqm)
         
         results_dom.css('li:not(#loadmore)').map do |product|
-          link = product.css('a').first
-          code = link.attr('href').split('=').last
-          image_url = product.css('img').first.attr('src')
+          attributes = {}
 
-          new({
-            "_id" => code,
-            "image_small_url" => image_url,
-            "code" => code,
-            "product_name" => link.inner_text.strip,
-            "id" => code,
-            "lc" => Openfoodfacts.locale_from_link(image_url)
-          })
+          if link = product.css('a').first
+            attributes["product_name"] = link.inner_text.strip
+
+            if code = link.attr('href').split('=').last
+              attributes["_id"] = code
+              attributes["code"] = code
+            end
+          end
+
+          if image = product.css('img').first and image_url = image.attr('src')
+            attributes["image_small_url"] = image_url
+            attributes["lc"] = Openfoodfacts.locale_from_link(image_url)
+          end
+
+          new(attributes)
         end
       end
     end
