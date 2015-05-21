@@ -27,7 +27,7 @@ module Openfoodfacts
 
     # Login
     #
-    def login(locale: Openfoodfacts::DEFAULT_LOCALE) # TODO Try others
+    def login(locale: Openfoodfacts::DEFAULT_LOCALE)
       if user = self.class.login(self.user_id, self.password, locale: locale)
         self.name = user.name
         self
