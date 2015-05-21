@@ -6,6 +6,7 @@ require 'open-uri'
 module Openfoodfacts
   class Product < Hashie::Mash
     class << self
+
       # Get product
       #
       def get(barcode, locale: Openfoodfacts::DEFAULT_LOCALE)
@@ -52,6 +53,7 @@ module Openfoodfacts
           new(attributes)
         end
       end
+
     end
   end
 end
