@@ -36,9 +36,6 @@ class TestOpenfoodfacts < Minitest::Test
     VCR.use_cassette("product_#{product_code}", record: :once, match_requests_on: [:host, :path]) do
       assert_equal ::Openfoodfacts::Product.get(product_code).code, product_code
     end
-    VCR.use_cassette("product_#{product_code}", record: :once, match_requests_on: [:host, :path]) do
-      #assert_equal ::Openfoodfacts.product(product_code).code, product_code # Backward compatibility
-    end
   end
 
   def test_that_it_search
