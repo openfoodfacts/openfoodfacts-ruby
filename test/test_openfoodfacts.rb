@@ -7,7 +7,7 @@ class TestOpenfoodfacts < Minitest::Test
 
   def test_it_fetches_locales
     VCR.use_cassette("index") do
-      locales = ::Openfoodfacts::locales
+      locales = ::Openfoodfacts::Locale.all
       assert_includes locales, "world"
       assert_includes locales, "fr"
       assert_includes locales, "be-fr"
