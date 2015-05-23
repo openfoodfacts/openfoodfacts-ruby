@@ -1,4 +1,5 @@
 require 'hashie'
+require 'net/http'
 require 'nokogiri'
 require 'open-uri'
 

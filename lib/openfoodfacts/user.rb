@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Openfoodfacts
   class User < Hashie::Mash
 
