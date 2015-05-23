@@ -71,4 +71,25 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  def test_it_updates_product
+    product_code = "3029330003533"
+    product = ::Openfoodfacts::Product.new(code: product_code)
+    product_last_modified_t = nil
+
+    VCR.use_cassette("fetch_product_#{product_code}", record: :all, match_requests_on: [:host, :path]) do
+      product.fetch
+      product_last_modified_t = product.last_modified_t
+    end
+
+    VCR.use_cassette("update_product_#{product_code}", record: :all, match_requests_on: [:host, :path]) do
+      product.update # Empty update are accepted, allow testing without altering data.
+    end
+
+    VCR.use_cassette("refetch_product_#{product_code}", record: :all, match_requests_on: [:host, :path]) do
+      product.fetch
+    end
+
+    refute_equal product_last_modified_t, product.last_modified_t
+  end
+
 end

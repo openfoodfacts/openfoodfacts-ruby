@@ -72,6 +72,26 @@ module Openfoodfacts
     end
     alias_method :reload, :fetch
 
+    # Update product
+    # Only product_name, brands and quantity fields seems to be updatable throught app / API.
+    # User can be nil
+    # Tested not updatable fields: countries, ingredients_text, purchase_places, purchase_places_tag, purchase_places_tags
+    #
+    def update(user: nil)
+      if self.code && self.lc
+        uri = URI("http://#{self.lc}.openfoodfacts.org/cgi/product_jqm.pl")
+        params = self.to_hash
+        params.merge!("user_id" => user.user_id, "password" => user.password) if user
+        response = Net::HTTP.post_form(uri, params)
+
+        data = JSON.parse(response.body)
+        data["status"] == 1
+      else
+        false
+      end
+    end
+    alias_method :save, :update
+
     # Return Product API URL
     #
     def url(locale: Openfoodfacts::DEFAULT_LOCALE)
