@@ -4,17 +4,21 @@ require 'open-uri'
 
 module Openfoodfacts
   class Product < Hashie::Mash
+
     class << self
 
       # Get product
       #
-      def get(barcode, locale: Openfoodfacts::DEFAULT_LOCALE)
-        product_url = url(barcode, locale: locale)
-        json = open(product_url).read
-        hash = JSON.parse(json)
+      def get(code, locale: Openfoodfacts::DEFAULT_LOCALE)
+        if code
+          product_url = url(code, locale: locale)
+          json = open(product_url).read
+          hash = JSON.parse(json)
 
-        new(hash["product"]) if !hash["status"].nil? && hash["status"] == 1
+          new(hash["product"]) if !hash["status"].nil? && hash["status"] == 1
+        end
       end
+      alias_method :find, :get
 
       # Return product API URL
       #
