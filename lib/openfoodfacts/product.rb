@@ -60,6 +60,18 @@ module Openfoodfacts
 
     end
 
+    # Fetch product
+    #
+    def fetch
+      if (self.code)
+        product = self.class.get(self.code)
+        self.merge!(product)
+      end
+
+      self
+    end
+    alias_method :reload, :fetch
+
     # Return Product API URL
     #
     def url(locale: Openfoodfacts::DEFAULT_LOCALE)
