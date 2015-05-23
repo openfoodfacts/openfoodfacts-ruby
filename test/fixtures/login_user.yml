@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://world.openfoodfacts.org/cgi/session.pl
+    body:
+      encoding: US-ASCII
+      string: jqm=1&user_id=wrong&password=absolutely
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 23 May 2015 19:34:29 GMT
+      Server:
+      - Apache/2.2.20 (Unix) mod_perl/2.0.5 Perl/v5.10.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "{}"
+    http_version: 
+  recorded_at: Sat, 23 May 2015 19:26:23 GMT
+recorded_with: VCR 2.9.3
