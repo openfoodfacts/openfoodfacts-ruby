@@ -71,6 +71,8 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+=begin
+  # Test disable in order to wait for a dedicated test account to not alter real data
   def test_it_updates_product
     product_code = "3029330003533"
     product = ::Openfoodfacts::Product.new(code: product_code)
@@ -91,5 +93,6 @@ class TestOpenfoodfacts < Minitest::Test
 
     refute_equal product_last_modified_t, product.last_modified_t
   end
+=end
 
 end
