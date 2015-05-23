@@ -18,8 +18,8 @@ module Openfoodfacts
 
       # Return product API URL
       #
-      def url(barcode, locale: Openfoodfacts::DEFAULT_LOCALE)
-        "http://#{locale}.openfoodfacts.org/api/v0/produit/#{barcode}.json"
+      def url(code, locale: Openfoodfacts::DEFAULT_LOCALE)
+        "http://#{locale}.openfoodfacts.org/api/v0/produit/#{code}.json"
       end
 
       # Search products 
@@ -54,5 +54,12 @@ module Openfoodfacts
       end
 
     end
+
+    # Return Product API URL
+    #
+    def url(locale: Openfoodfacts::DEFAULT_LOCALE)
+      self.class.url(self.code, locale: locale)
+    end
+
   end
 end
