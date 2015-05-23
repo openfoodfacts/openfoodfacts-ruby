@@ -37,6 +37,16 @@ class TestOpenfoodfacts < Minitest::Test
 
   def test_it_fetches_product
     product_code = "3029330003533"
+
+    VCR.use_cassette("fetch_product_#{product_code}", record: :once, match_requests_on: [:host, :path]) do
+      product = ::Openfoodfacts::Product.new(code: product_code)
+      product.fetch
+      refute_empty product.brands_tags
+    end
+  end
+
+  def test_it_get_product
+    product_code = "3029330003533"
     
     VCR.use_cassette("product_#{product_code}", record: :once, match_requests_on: [:host, :path]) do
       assert_equal ::Openfoodfacts::Product.get(product_code).code, product_code
