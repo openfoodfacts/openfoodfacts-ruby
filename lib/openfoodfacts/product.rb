@@ -52,6 +52,7 @@ module Openfoodfacts
           new(attributes)
         end
       end
+      alias_method :where, :search
 
     end
 
