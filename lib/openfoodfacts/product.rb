@@ -33,17 +33,21 @@ module Openfoodfacts
         url = "http://#{locale}.openfoodfacts.org/cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         json = open(url).read
         hash = JSON.parse(json)
+        html = hash["jqm"]
 
-        results_jqm = hash["jqm"]
-        results_dom = Nokogiri::HTML.fragment(results_jqm)
-        
-        results_dom.css('li:not(#loadmore)').map do |product|
+        from_jquery_mobile_list(html)
+      end
+      alias_method :where, :search
+
+      def from_html_list(html, list_css_selector, code_from_link_regex)
+        dom = Nokogiri::HTML.fragment(html)
+        dom.css(list_css_selector).map do |product|
           attributes = {}
 
           if link = product.css('a').first
             attributes["product_name"] = link.inner_text.strip
 
-            if code = link.attr('href').split('=').last
+            if code = link.attr('href')[code_from_link_regex, 1]
               attributes["_id"] = code
               attributes["code"] = code
             end
@@ -51,13 +55,21 @@ module Openfoodfacts
 
           if image = product.css('img').first and image_url = image.attr('src')
             attributes["image_small_url"] = image_url
-            attributes["lc"] = Openfoodfacts.locale_from_link(image_url)
+            attributes["lc"] = Locale.locale_from_link(image_url)
           end
 
           new(attributes)
         end
+
       end
-      alias_method :where, :search
+
+      def from_jquery_mobile_list(jqm_html)
+        from_html_list(jqm_html, 'ul li:not(#loadmore)', /code=(\d+)\Z/i)
+      end
+
+      def from_website_list(html)
+        from_html_list(html, 'ul.products li', /\/(\d+)[\/|\Z]/i)
+      end
 
     end
 
