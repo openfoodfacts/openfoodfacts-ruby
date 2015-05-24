@@ -30,6 +30,7 @@ module Openfoodfacts
       # Search products 
       #
       def search(terms, locale: Openfoodfacts::DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n')
+        terms = URI::encode(terms)
         url = "http://#{locale}.openfoodfacts.org/cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         json = open(url).read
         hash = JSON.parse(json)
