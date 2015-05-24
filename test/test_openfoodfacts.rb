@@ -35,6 +35,11 @@ class TestOpenfoodfacts < Minitest::Test
     assert_equal ::Openfoodfacts::Product.url(product.code, locale: 'ca'), product.url(locale: 'ca')
   end
 
+  def test_it_returns_product_weburl
+    product = ::Openfoodfacts::Product.new(code: "3029330003533")
+    assert_equal "http://world.openfoodfacts.org/product/#{product.code}", product.weburl(locale: 'world')
+  end
+
   def test_it_fetches_product
     product_code = "3029330003533"
 

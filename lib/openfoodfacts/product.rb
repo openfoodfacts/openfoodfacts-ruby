@@ -112,5 +112,22 @@ module Openfoodfacts
       self.class.url(self.code, locale: locale)
     end
 
+    # TODO: Add more locales
+    LOCALE_WEBURL_PREFIXES = {
+      'en' => 'product',
+      'fr' => 'produit',
+      'world' => 'product'
+    }
+
+    # Return Product web URL according to locale
+    #
+    def weburl(locale: nil)
+      locale ||= self.lc || Openfoodfacts::DEFAULT_LOCALE
+
+      if self.code && prefix = LOCALE_WEBURL_PREFIXES[locale]
+        "http://#{locale}.openfoodfacts.org/#{prefix}/#{self.code}"
+      end
+    end
+
   end
 end
