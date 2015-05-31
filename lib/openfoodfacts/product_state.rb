@@ -5,23 +5,32 @@ require 'open-uri'
 module Openfoodfacts
   class ProductState < Hashie::Mash
 
+    # TODO: Add more locales
+    LOCALE_PATHS = {
+      'en' => 'states',
+      'fr' => 'etats',
+      'world' => 'states'
+    }
+
     class << self
 
       # Get product states
       #
-      def all
-        url = "http://world.openfoodfacts.org/states"
-        html = open(url).read
-        dom = Nokogiri::HTML.fragment(html)
-        
-        dom.css('table#tagstable tbody tr').map do |product_state|
-          link = product_state.css('a').first
+      def all(locale: Openfoodfacts::DEFAULT_LOCALE)
+        if path = LOCALE_PATHS[locale]
+          url = "http://#{locale}.openfoodfacts.org/#{path}"
+          html = open(url).read
+          dom = Nokogiri::HTML.fragment(html)
+          
+          dom.css('table#tagstable tbody tr').map do |product_state|
+            link = product_state.css('a').first
 
-          new({
-            "name" => link.text.strip,
-            "url" => URI.join(url, link.attr('href')).to_s,
-            "products_count" => product_state.css('td').last.text.to_i
-          })
+            new({
+              "name" => link.text.strip,
+              "url" => URI.join(url, link.attr('href')).to_s,
+              "products_count" => product_state.css('td').last.text.to_i
+            })
+          end
         end
       end
 

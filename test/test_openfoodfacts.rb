@@ -109,6 +109,13 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  def test_it_fetches_product_states_for_locale
+    VCR.use_cassette("product_states_locale") do
+      product_states = ::Openfoodfacts::ProductState.all(locale: 'fr')
+      assert_equal "http://fr.openfoodfacts.org/etat/vide", product_states.last.url
+    end
+  end
+
   def test_it_fetches_products_for_state
     product_state = ::Openfoodfacts::ProductState.new("url" => "http://world.openfoodfacts.org/state/photos-uploaded", "products_count" => 22)
     VCR.use_cassette("products_for_state") do
