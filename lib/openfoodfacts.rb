@@ -1,3 +1,4 @@
+require_relative 'openfoodfacts/brand'
 require_relative 'openfoodfacts/locale'
 require_relative 'openfoodfacts/product'
 require_relative 'openfoodfacts/product_state'

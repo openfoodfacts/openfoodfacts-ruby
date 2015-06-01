@@ -100,6 +100,31 @@ class TestOpenfoodfacts < Minitest::Test
   end
 =end
 
+
+  # Brands
+
+  def test_it_fetches_brands
+    VCR.use_cassette("brands") do
+      brands = ::Openfoodfacts::Brand.all
+      assert_includes brands.map { |brand| brand['name'] }, "Carrefour"
+    end
+  end
+
+  def test_it_fetches_brands_for_locale
+    VCR.use_cassette("brands_locale") do
+      brands = ::Openfoodfacts::Brand.all(locale: 'fr')
+      assert_includes brands.map { |brand| brand['name'] }, "Loue"
+    end
+  end
+
+  def test_it_fetches_products_for_state
+    brand = ::Openfoodfacts::Brand.new("url" => "http://world.openfoodfacts.org/brand/picard", "products_count" => 25)
+    VCR.use_cassette("products_for_brand") do
+      products_for_brand = brand.products(page: -1)
+      refute_empty products_for_brand
+    end
+  end
+
   # Product states
 
   def test_it_fetches_product_states
