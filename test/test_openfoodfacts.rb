@@ -117,7 +117,7 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
-  def test_it_fetches_products_for_state
+  def test_it_fetches_products_for_brand
     brand = ::Openfoodfacts::Brand.new("url" => "http://world.openfoodfacts.org/brand/picard", "products_count" => 25)
     VCR.use_cassette("products_for_brand") do
       products_for_brand = brand.products(page: -1)
