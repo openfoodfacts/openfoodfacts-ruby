@@ -5,8 +5,9 @@ module Openfoodfacts
 
     # TODO: Add more locales
     LOCALE_PATHS = {
-      'en' => 'brands',
       'fr' => 'marques',
+      'uk' => 'brands',
+      'us' => 'brands',
       'world' => 'brands'
     }
 

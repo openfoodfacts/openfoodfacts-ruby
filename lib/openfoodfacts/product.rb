@@ -5,6 +5,14 @@ require 'open-uri'
 
 module Openfoodfacts
   class Product < Hashie::Mash
+    
+    # TODO: Add more locales
+    LOCALE_WEBURL_PREFIXES = {
+      'fr' => 'produit',
+      'uk' => 'product',
+      'us' => 'product',
+      'world' => 'product'
+    }
 
     class << self
 
@@ -151,13 +159,6 @@ module Openfoodfacts
     def url(locale: Openfoodfacts::DEFAULT_LOCALE)
       self.class.url(self.code, locale: locale)
     end
-
-    # TODO: Add more locales
-    LOCALE_WEBURL_PREFIXES = {
-      'en' => 'product',
-      'fr' => 'produit',
-      'world' => 'product'
-    }
 
     # Return Product web URL according to locale
     #
