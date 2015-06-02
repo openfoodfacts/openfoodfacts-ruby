@@ -75,9 +75,20 @@ module Openfoodfacts
       # page -1 to fetch all pages
       def from_website_page(page_url, page: -1, products_count: nil)
         if page == -1
-          if products_count
+          if products_count # Avoid one call
             pages_count = (products_count.to_f / 20).ceil
-            (1..pages_count).map { |page| from_website_page(page: page) }.flatten
+            (1..pages_count).map { |page| from_website_page(page_url, page: page) }.flatten
+          else
+            products = []
+            
+            page = 1
+            begin
+              products_on_page = from_website_page(page_url, page: page)
+              products += products_on_page
+              page += 1
+            end while products_on_page.any?
+
+            products
           end
         else
           html = open("#{page_url}/#{page}").read
