@@ -1,14 +1,13 @@
 require 'hashie'
-require 'nokogiri'
-require 'open-uri'
 
 module Openfoodfacts
   class Brand < Hashie::Mash
 
     # TODO: Add more locales
     LOCALE_PATHS = {
-      'en' => 'brands',
       'fr' => 'marques',
+      'uk' => 'brands',
+      'us' => 'brands',
       'world' => 'brands'
     }
 

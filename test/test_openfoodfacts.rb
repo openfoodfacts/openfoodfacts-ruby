@@ -101,6 +101,31 @@ class TestOpenfoodfacts < Minitest::Test
 =end
 
 
+  # Additives
+
+  def test_it_fetches_additives
+    VCR.use_cassette("additives") do
+      additives = ::Openfoodfacts::Additive.all(locale: 'fr') # FR to have riskiness
+      assert_equal "http://fr.openfoodfacts.org/additif/e330-acide-citrique", additives.first.url
+      refute_nil additives.detect { |additive| !additive['riskiness'].nil? }
+    end
+  end
+
+  def test_it_fetches_additives_for_locale
+    VCR.use_cassette("additives_locale") do
+      additives = ::Openfoodfacts::Additive.all(locale: 'fr')
+      assert_equal "http://fr.openfoodfacts.org/additif/e330-acide-citrique", additives.first.url
+    end
+  end
+
+  def test_it_fetches_products_with_additive
+    additive = ::Openfoodfacts::Additive.new("url" => "http://world.openfoodfacts.org/additive/e452i-sodium-polyphosphate")
+    VCR.use_cassette("products_with_additive") do
+      products_with_additive = additive.products(page: -1)
+      refute_empty products_with_additive
+    end
+  end
+
   # Brands
 
   def test_it_fetches_brands

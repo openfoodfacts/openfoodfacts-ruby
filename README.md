@@ -24,6 +24,28 @@ Or install it yourself as:
 
     $ gem install openfoodfacts
 
+## Models
+
+- Additive
+- Brand
+- Category
+- City
+- Contributor
+- Country
+- IngredientThatMayBeFromPalmOil
+- Label
+- Locale
+- ManufacturingPlace
+- Origin
+- PackagerCode
+- Packaging
+- Product
+- ProductState
+- PurchasePlace
+- Store
+- Trace
+- User
+
 ## Usage
 
 ```ruby

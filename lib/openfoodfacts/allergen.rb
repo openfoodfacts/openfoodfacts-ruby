@@ -1,19 +1,19 @@
 require 'hashie'
 
 module Openfoodfacts
-  class ProductState < Hashie::Mash
+  class Allergen < Hashie::Mash
 
     # TODO: Add more locales
     LOCALE_PATHS = {
-      'fr' => 'etats',
-      'uk' => 'states',
-      'us' => 'states',
-      'world' => 'states'
+      'fr' => 'allergenes',
+      'uk' => 'allergens',
+      'us' => 'allergens',
+      'world' => 'allergens'
     }
 
     class << self
 
-      # Get product states
+      # Get allergens
       #
       def all(locale: Openfoodfacts::DEFAULT_LOCALE)
         if path = LOCALE_PATHS[locale]
@@ -23,7 +23,7 @@ module Openfoodfacts
 
     end
 
-    # Get products with state
+    # Get products with allergen
     #
     def products(page: -1)
       Product.from_website_page(url, page: page, products_count: products_count) if url
