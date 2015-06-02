@@ -104,19 +104,23 @@ module Openfoodfacts
         end
       end
 
-      def tags_from_page(_klass, page_url)
+      def tags_from_page(_klass, page_url, &custom_tag_parsing)
         html = open(page_url).read
         dom = Nokogiri::HTML.fragment(html)
         
         c = dom.css('table#tagstable tbody tr').length
         dom.css('table#tagstable tbody tr').map do |tag|
-          link = tag.css('a').first
-
-          _klass.new({
-            "name" => link.text.strip,
-            "url" => URI.join(page_url, link.attr('href')).to_s,
-            "products_count" => tag.css('td').last.text.to_i
-          })
+          if custom_tag_parsing
+            custom_tag_parsing.call(tag)
+          else
+            link = tag.css('a').first
+            
+            _klass.new({
+              "name" => link.text.strip,
+              "url" => URI.join(page_url, link.attr('href')).to_s,
+              "products_count" => tag.css('td')[1].text.to_i
+            })
+          end
         end
       end
 
