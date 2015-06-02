@@ -24,7 +24,7 @@ module Openfoodfacts
       # Return product API URL
       #
       def url(code, locale: Openfoodfacts::DEFAULT_LOCALE)
-        "http://#{locale}.openfoodfacts.org/api/v0/produit/#{code}.json"
+        "http://#{locale}.openfoodfacts.org/api/v0/produit/#{code}.json" if code
       end
 
       # Search products 
@@ -70,6 +70,35 @@ module Openfoodfacts
 
       def from_website_list(html)
         from_html_list(html, 'ul.products li', /\/(\d+)[\/|\Z]/i)
+      end
+
+      # page -1 to fetch all pages
+      def from_website_page(page_url, page: -1, products_count: nil)
+        if page == -1
+          if products_count
+            pages_count = (products_count.to_f / 20).ceil
+            (1..pages_count).map { |page| from_website_page(page: page) }.flatten
+          end
+        else
+          html = open("#{page_url}/#{page}").read
+          from_website_list(html)
+        end
+      end
+
+      def tags_from_page(_klass, page_url)
+        html = open(page_url).read
+        dom = Nokogiri::HTML.fragment(html)
+        
+        c = dom.css('table#tagstable tbody tr').length
+        dom.css('table#tagstable tbody tr').map do |tag|
+          link = tag.css('a').first
+
+          _klass.new({
+            "name" => link.text.strip,
+            "url" => URI.join(page_url, link.attr('href')).to_s,
+            "products_count" => tag.css('td').last.text.to_i
+          })
+        end
       end
 
     end
