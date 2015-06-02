@@ -1,6 +1,4 @@
 require 'hashie'
-require 'nokogiri'
-require 'open-uri'
 
 module Openfoodfacts
   class ProductState < Hashie::Mash
