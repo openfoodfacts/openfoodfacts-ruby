@@ -108,7 +108,6 @@ module Openfoodfacts
         html = open(page_url).read
         dom = Nokogiri::HTML.fragment(html)
         
-        c = dom.css('table#tagstable tbody tr').length
         dom.css('table#tagstable tbody tr').map do |tag|
           if custom_tag_parsing
             custom_tag_parsing.call(tag)
