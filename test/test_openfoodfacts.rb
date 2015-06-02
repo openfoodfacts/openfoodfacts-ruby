@@ -174,4 +174,12 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # FAQ
+
+  def test_it_fetches_faq
+    VCR.use_cassette("faq") do
+      refute_empty ::Openfoodfacts::Faq.items(locale: 'fr')
+    end
+  end
+
 end
