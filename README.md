@@ -26,12 +26,15 @@ Or install it yourself as:
 
 ## Models
 
+All data is available for World, French, UK and US version for now. You should update the gem page URLs mapping for others.
+
 - Additive
 - Brand
 - Category
 - City
 - Contributor
 - Country
+- Faq
 - IngredientThatMayBeFromPalmOil
 - Label
 - Locale
@@ -39,6 +42,7 @@ Or install it yourself as:
 - Origin
 - PackagerCode
 - Packaging
+- Press
 - Product
 - ProductState
 - PurchasePlace
