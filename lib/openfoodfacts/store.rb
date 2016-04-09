@@ -15,7 +15,7 @@ module Openfoodfacts
 
       # Get stores
       #
-      def all(locale: Openfoodfacts::DEFAULT_LOCALE, domain: 'openfoodfacts.org')
+      def all(locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
           Product.tags_from_page(self, "http://#{locale}.#{domain}/#{path}")
         end

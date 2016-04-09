@@ -31,7 +31,7 @@ module Openfoodfacts
 
       # Return product API URL
       #
-      def url(code, locale: Openfoodfacts::DEFAULT_LOCALE, domain: 'openfoodfacts.org')
+      def url(code, locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
         if code
           path = "/pi/v0/produit/#{code}.json"
           "http://#{locale}.#{domain}/#{path}"
@@ -40,7 +40,7 @@ module Openfoodfacts
 
       # Search products
       #
-      def search(terms, locale: Openfoodfacts::DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: 'openfoodfacts.org')
+      def search(terms, locale: Openfoodfacts::DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: Openfoodfacts::DEFAULT_DOMAIN)
         terms = URI::encode(terms)
         path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         url = "http://#{locale}.#{domain}/#{path}"
@@ -147,7 +147,7 @@ module Openfoodfacts
     # User can be nil
     # Tested not updatable fields: countries, ingredients_text, purchase_places, purchase_places_tag, purchase_places_tags
     #
-    def update(user: nil, domain: 'openfoodfacts.org')
+    def update(user: nil, domain: Openfoodfacts::DEFAULT_DOMAIN)
       if self.code && self.lc
         subdomain = self.lc == 'world' ? 'world' : "world-#{self.lc}"
         path = 'cgi/product_jqm.pl'
@@ -172,7 +172,7 @@ module Openfoodfacts
 
     # Return Product web URL according to locale
     #
-    def weburl(locale: nil, domain: 'openfoodfacts.org')
+    def weburl(locale: nil, domain: Openfoodfacts::DEFAULT_DOMAIN)
       locale ||= self.lc || Openfoodfacts::DEFAULT_LOCALE
 
       if self.code && prefix = LOCALE_WEBURL_PREFIXES[locale]

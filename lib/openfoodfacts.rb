@@ -28,6 +28,7 @@ require 'open-uri'
 module Openfoodfacts
 
   DEFAULT_LOCALE = Locale::GLOBAL
+  DEFAULT_DOMAIN = 'openfoodfacts.org'
 
   class << self
 
