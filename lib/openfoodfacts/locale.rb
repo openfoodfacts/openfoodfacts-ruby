@@ -20,7 +20,8 @@ module Openfoodfacts
       # Return locale from link
       #
       def locale_from_link(link)
-        link[/^https?:\/\/([^.]+)\./i, 1]
+        locale = link[/^https?:\/\/([^.]+)\./i, 1]
+        locale unless locale.nil? || locale == 'static'
       end
 
     end
