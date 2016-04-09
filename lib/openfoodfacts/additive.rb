@@ -15,9 +15,9 @@ module Openfoodfacts
 
       # Get additives
       #
-      def all(locale: Openfoodfacts::DEFAULT_LOCALE)
+      def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
-          page_url = "http://#{locale}.openfoodfacts.org/#{path}"
+          page_url = "http://#{locale}.#{domain}/#{path}"
 
           Product.tags_from_page(self, page_url) do |tag|
             columns = tag.css('td')
@@ -28,7 +28,7 @@ module Openfoodfacts
               "url" => URI.join(page_url, link.attr('href')).to_s,
               "products_count" => columns[1].text.to_i,
             }
-            
+
             riskiness = columns[2].attr('class')
             if riskiness
               attributes["riskiness"] = riskiness[/level_(\d+)/, 1].to_i

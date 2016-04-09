@@ -5,7 +5,7 @@ require 'open-uri'
 
 module Openfoodfacts
   class Product < Hashie::Mash
-    
+
     # TODO: Add more locales
     LOCALE_WEBURL_PREFIXES = {
       'fr' => 'produit',
@@ -18,7 +18,7 @@ module Openfoodfacts
 
       # Get product
       #
-      def get(code, locale: Openfoodfacts::DEFAULT_LOCALE)
+      def get(code, locale: DEFAULT_LOCALE)
         if code
           product_url = url(code, locale: locale)
           json = open(product_url).read
@@ -31,15 +31,19 @@ module Openfoodfacts
 
       # Return product API URL
       #
-      def url(code, locale: Openfoodfacts::DEFAULT_LOCALE)
-        "http://#{locale}.openfoodfacts.org/api/v0/produit/#{code}.json" if code
+      def url(code, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
+        if code
+          path = "api/v0/produit/#{code}.json"
+          "http://#{locale}.#{domain}/#{path}"
+        end
       end
 
-      # Search products 
+      # Search products
       #
-      def search(terms, locale: Openfoodfacts::DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n')
+      def search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: DEFAULT_DOMAIN)
         terms = URI::encode(terms)
-        url = "http://#{locale}.openfoodfacts.org/cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
+        path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
+        url = "http://#{locale}.#{domain}/#{path}"
         json = open(url).read
         hash = JSON.parse(json)
         html = hash["jqm"]
@@ -89,7 +93,7 @@ module Openfoodfacts
             (1..pages_count).map { |page| from_website_page(page_url, page: page) }.flatten
           else
             products = []
-            
+
             page = 1
             begin
               products_on_page = from_website_page(page_url, page: page)
@@ -108,13 +112,13 @@ module Openfoodfacts
       def tags_from_page(_klass, page_url, &custom_tag_parsing)
         html = open(page_url).read
         dom = Nokogiri::HTML.fragment(html)
-        
+
         dom.css('table#tagstable tbody tr').map do |tag|
           if custom_tag_parsing
             custom_tag_parsing.call(tag)
           else
             link = tag.css('a').first
-            
+
             _klass.new({
               "name" => link.text.strip,
               "url" => URI.join(page_url, link.attr('href')).to_s,
@@ -143,10 +147,11 @@ module Openfoodfacts
     # User can be nil
     # Tested not updatable fields: countries, ingredients_text, purchase_places, purchase_places_tag, purchase_places_tags
     #
-    def update(user: nil)
+    def update(user: nil, domain: DEFAULT_DOMAIN)
       if self.code && self.lc
         subdomain = self.lc == 'world' ? 'world' : "world-#{self.lc}"
-        uri = URI("http://#{subdomain}.openfoodfacts.org/cgi/product_jqm.pl")
+        path = 'cgi/product_jqm.pl'
+        uri = URI("http://#{subdomain}.#{domain}/#{path}")
         params = self.to_hash
         params.merge!("user_id" => user.user_id, "password" => user.password) if user
         response = Net::HTTP.post_form(uri, params)
@@ -161,17 +166,18 @@ module Openfoodfacts
 
     # Return Product API URL
     #
-    def url(locale: Openfoodfacts::DEFAULT_LOCALE)
+    def url(locale: DEFAULT_LOCALE)
       self.class.url(self.code, locale: locale)
     end
 
     # Return Product web URL according to locale
     #
-    def weburl(locale: nil)
-      locale ||= self.lc || Openfoodfacts::DEFAULT_LOCALE
+    def weburl(locale: nil, domain: DEFAULT_DOMAIN)
+      locale ||= self.lc || DEFAULT_LOCALE
 
       if self.code && prefix = LOCALE_WEBURL_PREFIXES[locale]
-        "http://#{locale}.openfoodfacts.org/#{prefix}/#{self.code}"
+        path = "#{prefix}/#{self.code}"
+        "http://#{locale}.#{domain}/#{path}"
       end
     end
 
