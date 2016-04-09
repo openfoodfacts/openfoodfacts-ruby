@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nicolas Leger"]
   spec.email         = ["nicolas.leger@nleger.com"]
 
-  spec.summary       = "OpenFoodFacts API Wrapper"
-  spec.description   = "OpenFoodFacts API Wrapper, the open database about food."
+  spec.summary       = "Open Food Facts API Wrapper"
+  spec.description   = "Open Food Facts API Wrapper, the open database about food."
   spec.homepage      = "https://github.com/openfoodfacts/openfoodfacts-ruby"
   spec.license       = "MIT"
 
