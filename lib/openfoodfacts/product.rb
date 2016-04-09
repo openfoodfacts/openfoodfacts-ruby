@@ -33,7 +33,7 @@ module Openfoodfacts
       #
       def url(code, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if code
-          path = "/pi/v0/produit/#{code}.json"
+          path = "pi/v0/produit/#{code}.json"
           "http://#{locale}.#{domain}/#{path}"
         end
       end
