@@ -8,8 +8,9 @@ module Openfoodfacts
       # Login
       # WARNING SECURITY: It is not made throught HTTPS Secure so password can be read on the way.
       #
-      def login(user_id, password, locale: Openfoodfacts::DEFAULT_LOCALE)
-        uri = URI("http://#{locale}.openfoodfacts.org/cgi/session.pl")
+      def login(user_id, password, locale: Openfoodfacts::DEFAULT_LOCALE, domain: 'openfoodfacts.org')
+        path = 'cgi/session.pl'
+        uri = URI("http://#{locale}.#{domain}/#{path}")
         params = {
           "jqm" => "1",
           "user_id" => user_id,

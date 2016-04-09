@@ -22,11 +22,11 @@ module Openfoodfacts
     }
 
     class << self
-      def items(locale: Openfoodfacts::DEFAULT_LOCALE)
+      def items(locale: Openfoodfacts::DEFAULT_LOCALE, domain: 'openfoodfacts.org')
         if path = LOCALE_PATHS[locale]
-          html = open("http://#{locale}.openfoodfacts.org/#{path}").read
+          html = open("http://#{locale}.#{domain}/#{path}").read
           dom = Nokogiri::HTML.fragment(html)
-          
+
           titles = dom.css('#main_column li')
           titles.each_with_index.map do |item, index|
             data = item.inner_html.split(' - ')

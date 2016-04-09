@@ -15,9 +15,9 @@ module Openfoodfacts
 
       # Get contributors
       #
-      def all(locale: Openfoodfacts::DEFAULT_LOCALE)
+      def all(locale: Openfoodfacts::DEFAULT_LOCALE, domain: 'openfoodfacts.org')
         if path = LOCALE_PATHS[locale]
-          Product.tags_from_page(self, "http://#{locale}.openfoodfacts.org/#{path}")
+          Product.tags_from_page(self, "http://#{locale}.#{domain}/#{path}")
         end
       end
 
