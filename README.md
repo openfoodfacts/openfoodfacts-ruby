@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby)
 [![Dependency Status](https://gemnasium.com/openfoodfacts/openfoodfacts-ruby.svg)](https://gemnasium.com/openfoodfacts/openfoodfacts-ruby)
 [![Code Climate](https://codeclimate.com/github/openfoodfacts/openfoodfacts-ruby/badges/gpa.svg)](https://codeclimate.com/github/openfoodfacts/openfoodfacts-ruby)
-[![Coverage Status](https://coveralls.io/repos/openfoodfacts/openfoodfacts-ruby/badge.svg)](https://coveralls.io/r/openfoodfacts/openfoodfacts-ruby)
+[![Coverage Status](https://coveralls.io/repos/github/openfoodfacts/openfoodfacts-ruby/badge.svg?branch=master)](https://coveralls.io/github/openfoodfacts/openfoodfacts-ruby?branch=master)
 [![Documentation](http://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](http://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
 
 API Wrapper for [OpenFoodFacts](https://openfoodfacts.org/), the open database about food.
