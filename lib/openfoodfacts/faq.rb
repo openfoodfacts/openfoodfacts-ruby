@@ -14,7 +14,7 @@ module Openfoodfacts
     }
 
     class << self
-      def items(locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
+      def items(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
           html = open("http://#{locale}.#{domain}/#{path}").read
           dom = Nokogiri::HTML.fragment(html)

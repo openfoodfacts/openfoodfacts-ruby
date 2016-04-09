@@ -8,7 +8,7 @@ module Openfoodfacts
       # Login
       # WARNING SECURITY: It is not made throught HTTPS Secure so password can be read on the way.
       #
-      def login(user_id, password, locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
+      def login(user_id, password, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         path = 'cgi/session.pl'
         uri = URI("http://#{locale}.#{domain}/#{path}")
         params = {
@@ -30,7 +30,7 @@ module Openfoodfacts
 
     # Login
     #
-    def login(locale: Openfoodfacts::DEFAULT_LOCALE)
+    def login(locale: DEFAULT_LOCALE)
       if user = self.class.login(self.user_id, self.password, locale: locale)
         self.name = user.name
         self

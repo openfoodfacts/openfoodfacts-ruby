@@ -15,7 +15,7 @@ module Openfoodfacts
 
       # Get packager codes
       #
-      def all(locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
+      def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
           Product.tags_from_page(self, "http://#{locale}.#{domain}/#{path}")
         end

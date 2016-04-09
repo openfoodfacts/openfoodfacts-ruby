@@ -18,7 +18,7 @@ module Openfoodfacts
 
       # Get product
       #
-      def get(code, locale: Openfoodfacts::DEFAULT_LOCALE)
+      def get(code, locale: DEFAULT_LOCALE)
         if code
           product_url = url(code, locale: locale)
           json = open(product_url).read
@@ -31,7 +31,7 @@ module Openfoodfacts
 
       # Return product API URL
       #
-      def url(code, locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
+      def url(code, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if code
           path = "/pi/v0/produit/#{code}.json"
           "http://#{locale}.#{domain}/#{path}"
@@ -40,7 +40,7 @@ module Openfoodfacts
 
       # Search products
       #
-      def search(terms, locale: Openfoodfacts::DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: Openfoodfacts::DEFAULT_DOMAIN)
+      def search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: DEFAULT_DOMAIN)
         terms = URI::encode(terms)
         path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         url = "http://#{locale}.#{domain}/#{path}"
@@ -147,7 +147,7 @@ module Openfoodfacts
     # User can be nil
     # Tested not updatable fields: countries, ingredients_text, purchase_places, purchase_places_tag, purchase_places_tags
     #
-    def update(user: nil, domain: Openfoodfacts::DEFAULT_DOMAIN)
+    def update(user: nil, domain: DEFAULT_DOMAIN)
       if self.code && self.lc
         subdomain = self.lc == 'world' ? 'world' : "world-#{self.lc}"
         path = 'cgi/product_jqm.pl'
@@ -166,14 +166,14 @@ module Openfoodfacts
 
     # Return Product API URL
     #
-    def url(locale: Openfoodfacts::DEFAULT_LOCALE)
+    def url(locale: DEFAULT_LOCALE)
       self.class.url(self.code, locale: locale)
     end
 
     # Return Product web URL according to locale
     #
-    def weburl(locale: nil, domain: Openfoodfacts::DEFAULT_DOMAIN)
-      locale ||= self.lc || Openfoodfacts::DEFAULT_LOCALE
+    def weburl(locale: nil, domain: DEFAULT_DOMAIN)
+      locale ||= self.lc || DEFAULT_LOCALE
 
       if self.code && prefix = LOCALE_WEBURL_PREFIXES[locale]
         path = "#{prefix}/#{self.code}"

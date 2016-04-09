@@ -15,7 +15,7 @@ module Openfoodfacts
 
       # Get additives
       #
-      def all(locale: Openfoodfacts::DEFAULT_LOCALE, domain: Openfoodfacts::DEFAULT_DOMAIN)
+      def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
           page_url = "http://#{locale}.#{domain}/#{path}"
 
