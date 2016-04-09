@@ -1,4 +1,4 @@
-# OpenFoodFacts
+# Open Food Facts
 
 [![Gem Version](https://badge.fury.io/rb/openfoodfacts.svg)](http://badge.fury.io/rb/openfoodfacts)
 [![Build Status](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby)
@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/openfoodfacts/openfoodfacts-ruby/badge.svg?branch=master)](https://coveralls.io/github/openfoodfacts/openfoodfacts-ruby?branch=master)
 [![Documentation](http://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](http://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
 
-API Wrapper for [OpenFoodFacts](https://openfoodfacts.org/), the open database about food.
+API Wrapper for [Open Food Facts](https://openfoodfacts.org/), the open database about food.
 
 ## Installation
 
