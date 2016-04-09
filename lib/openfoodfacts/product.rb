@@ -48,7 +48,7 @@ module Openfoodfacts
       end
       alias_method :where, :search
 
-      def from_html_list(html, list_css_selector, code_from_link_regex)
+      def from_html_list(html, list_css_selector, code_from_link_regex, locale: 'world')
         dom = Nokogiri::HTML.fragment(html)
         dom.css(list_css_selector).map do |product|
           attributes = {}
@@ -66,6 +66,7 @@ module Openfoodfacts
             attributes["image_small_url"] = image_url
             attributes["lc"] = Locale.locale_from_link(image_url)
           end
+          attributes["lc"] ||= locale
 
           new(attributes)
         end
@@ -76,8 +77,8 @@ module Openfoodfacts
         from_html_list(jqm_html, 'ul li:not(#loadmore)', /code=(\d+)\Z/i)
       end
 
-      def from_website_list(html)
-        from_html_list(html, 'ul.products li', /\/(\d+)[\/|\Z]/i)
+      def from_website_list(html, locale: 'world')
+        from_html_list(html, 'ul.products li', /\/(\d+)[\/|\Z]/i, locale: 'world')
       end
 
       # page -1 to fetch all pages
@@ -100,7 +101,7 @@ module Openfoodfacts
           end
         else
           html = open("#{page_url}/#{page}").read
-          from_website_list(html)
+          from_website_list(html, locale: Locale.locale_from_link(page_url))
         end
       end
 
@@ -144,7 +145,8 @@ module Openfoodfacts
     #
     def update(user: nil)
       if self.code && self.lc
-        uri = URI("http://#{self.lc}.openfoodfacts.org/cgi/product_jqm.pl")
+        subdomain = self.lc == 'world' ? 'world' : "world-#{self.lc}"
+        uri = URI("http://#{subdomain}.openfoodfacts.org/cgi/product_jqm.pl")
         params = self.to_hash
         params.merge!("user_id" => user.user_id, "password" => user.password) if user
         response = Net::HTTP.post_form(uri, params)
