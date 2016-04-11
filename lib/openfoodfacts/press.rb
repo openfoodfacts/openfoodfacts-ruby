@@ -16,9 +16,9 @@ module Openfoodfacts
 
     LOCALE_DATE_FORMATS = {
       'fr' => '%d/%m/%Y',
-      'uk' => '%m/%d/%Y',
-      'us' => '%m/%d/%Y',
-      'world' => '%m/%d/%Y'
+      'uk' => '%d/%m/%Y',
+      'us' => '%d/%m/%Y',
+      'world' => '%d/%m/%Y'
     }
 
     class << self
