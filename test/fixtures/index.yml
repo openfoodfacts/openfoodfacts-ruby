@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://openfoodfacts.org/
+    uri: https://openfoodfacts.org/
     body:
       encoding: US-ASCII
       string: ''

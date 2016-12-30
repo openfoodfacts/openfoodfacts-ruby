@@ -10,7 +10,7 @@ module Openfoodfacts
       #
       def login(user_id, password, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         path = 'cgi/session.pl'
-        uri = URI("http://#{locale}.#{domain}/#{path}")
+        uri = URI("https://#{locale}.#{domain}/#{path}")
         params = {
           "jqm" => "1",
           "user_id" => user_id,

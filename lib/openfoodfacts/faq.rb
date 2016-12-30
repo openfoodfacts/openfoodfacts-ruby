@@ -16,7 +16,7 @@ module Openfoodfacts
     class << self
       def items(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
-          html = open("http://#{locale}.#{domain}/#{path}").read
+          html = open("https://#{locale}.#{domain}/#{path}").read
           dom = Nokogiri::HTML.fragment(html)
 
           titles = dom.css('#main_column h2')
