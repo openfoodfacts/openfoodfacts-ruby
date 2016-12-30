@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://world.openfoodfacts.org/state/photos-uploaded/1
+    uri: https://world.openfoodfacts.org/state/photos-uploaded/1
     body:
       encoding: US-ASCII
       string: ''
@@ -1083,7 +1083,7 @@ http_interactions:
   recorded_at: Sat, 23 May 2015 19:26:24 GMT
 - request:
     method: get
-    uri: http://world.openfoodfacts.org/state/photos-uploaded/2
+    uri: https://world.openfoodfacts.org/state/photos-uploaded/2
     body:
       encoding: US-ASCII
       string: ''

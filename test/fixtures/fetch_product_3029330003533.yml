@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://world.openfoodfacts.org/api/v0/produit/3029330003533.json
+    uri: https://world.openfoodfacts.org/api/v0/produit/3029330003533.json
     body:
       encoding: US-ASCII
       string: ''

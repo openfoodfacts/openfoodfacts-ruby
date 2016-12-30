@@ -17,7 +17,7 @@ module Openfoodfacts
       #
       def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
-          page_url = "http://#{locale}.#{domain}/#{path}"
+          page_url = "https://#{locale}.#{domain}/#{path}"
 
           Product.tags_from_page(self, page_url) do |tag|
             columns = tag.css('td')

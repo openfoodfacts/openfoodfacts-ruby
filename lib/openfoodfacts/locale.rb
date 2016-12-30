@@ -8,7 +8,7 @@ module Openfoodfacts
       # Get locales
       #
       def all(domain: DEFAULT_DOMAIN)
-        url = "http://#{domain}/"
+        url = "https://#{domain}/"
         body = open(url).read
         dom = Nokogiri.parse(body)
 

@@ -37,7 +37,7 @@ class TestOpenfoodfacts < Minitest::Test
 
   def test_it_returns_product_weburl
     product = ::Openfoodfacts::Product.new(code: "3029330003533")
-    assert_equal "http://world.openfoodfacts.org/product/#{product.code}", product.weburl(locale: 'world')
+    assert_equal "https://world.openfoodfacts.org/product/#{product.code}", product.weburl(locale: 'world')
   end
 
   def test_it_fetches_product
@@ -106,7 +106,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_additives
     VCR.use_cassette("additives") do
       additives = ::Openfoodfacts::Additive.all(locale: 'fr') # FR to have riskiness
-      assert_equal "http://fr.openfoodfacts.org/additif/e330-acide-citrique", additives.first.url
+      assert_equal "https://fr.openfoodfacts.org/additif/e330-acide-citrique", additives.first.url
       refute_nil additives.detect { |additive| !additive['riskiness'].nil? }
     end
   end
@@ -114,12 +114,12 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_additives_for_locale
     VCR.use_cassette("additives_locale") do
       additives = ::Openfoodfacts::Additive.all(locale: 'fr')
-      assert_equal "http://fr.openfoodfacts.org/additif/e330-acide-citrique", additives.first.url
+      assert_equal "https://fr.openfoodfacts.org/additif/e330-acide-citrique", additives.first.url
     end
   end
 
   def test_it_fetches_products_with_additive
-    additive = ::Openfoodfacts::Additive.new("url" => "http://world.openfoodfacts.org/additive/e452i-sodium-polyphosphate")
+    additive = ::Openfoodfacts::Additive.new("url" => "https://world.openfoodfacts.org/additive/e452i-sodium-polyphosphate")
     VCR.use_cassette("products_with_additive") do
       products_with_additive = additive.products(page: -1)
       refute_empty products_with_additive
@@ -143,7 +143,7 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_it_fetches_products_for_brand
-    brand = ::Openfoodfacts::Brand.new("url" => "http://world.openfoodfacts.org/brand/bel")
+    brand = ::Openfoodfacts::Brand.new("url" => "https://world.openfoodfacts.org/brand/bel")
     VCR.use_cassette("products_for_brand") do
       products_for_brand = brand.products(page: -1)
       refute_empty products_for_brand
@@ -155,19 +155,19 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_product_states
     VCR.use_cassette("product_states") do
       product_states = ::Openfoodfacts::ProductState.all
-      assert_equal "http://world.openfoodfacts.org/state/empty", product_states.last.url
+      assert_equal "https://world.openfoodfacts.org/state/empty", product_states.last.url
     end
   end
 
   def test_it_fetches_product_states_for_locale
     VCR.use_cassette("product_states_locale") do
       product_states = ::Openfoodfacts::ProductState.all(locale: 'fr')
-      assert_equal "http://fr.openfoodfacts.org/etat/vide", product_states.last.url
+      assert_equal "https://fr.openfoodfacts.org/etat/vide", product_states.last.url
     end
   end
 
   def test_it_fetches_products_for_state
-    product_state = ::Openfoodfacts::ProductState.new("url" => "http://world.openfoodfacts.org/state/photos-uploaded", "products_count" => 22)
+    product_state = ::Openfoodfacts::ProductState.new("url" => "https://world.openfoodfacts.org/state/photos-uploaded", "products_count" => 22)
     VCR.use_cassette("products_for_state") do
       products_for_state = product_state.products(page: -1)
       refute_empty products_for_state

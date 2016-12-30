@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://world.openfoodfacts.org/cgi/search.pl?jqm=1&page=1&page_size=42&search_terms=Chocolat&sort_by=unique_scans_n
+    uri: https://world.openfoodfacts.org/cgi/search.pl?jqm=1&page=1&page_size=42&search_terms=Chocolat&sort_by=unique_scans_n
     body:
       encoding: US-ASCII
       string: ''
@@ -380,7 +380,7 @@ http_interactions:
   recorded_at: Sat, 23 May 2015 19:26:25 GMT
 - request:
     method: get
-    uri: http://world.openfoodfacts.org/cgi/search.pl?jqm=1&page=1&page_size=20&search_terms=Chocolat&sort_by=unique_scans_n
+    uri: https://world.openfoodfacts.org/cgi/search.pl?jqm=1&page=1&page_size=20&search_terms=Chocolat&sort_by=unique_scans_n
     body:
       encoding: US-ASCII
       string: ''

@@ -34,7 +34,7 @@ module Openfoodfacts
       def url(code, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if code
           path = "api/v0/produit/#{code}.json"
-          "http://#{locale}.#{domain}/#{path}"
+          "https://#{locale}.#{domain}/#{path}"
         end
       end
 
@@ -43,7 +43,7 @@ module Openfoodfacts
       def search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: DEFAULT_DOMAIN)
         terms = URI::encode(terms)
         path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
-        url = "http://#{locale}.#{domain}/#{path}"
+        url = "https://#{locale}.#{domain}/#{path}"
         json = open(url).read
         hash = JSON.parse(json)
         html = hash["jqm"]
@@ -151,7 +151,7 @@ module Openfoodfacts
       if self.code && self.lc
         subdomain = self.lc == 'world' ? 'world' : "world-#{self.lc}"
         path = 'cgi/product_jqm.pl'
-        uri = URI("http://#{subdomain}.#{domain}/#{path}")
+        uri = URI("https://#{subdomain}.#{domain}/#{path}")
         params = self.to_hash
         params.merge!("user_id" => user.user_id, "password" => user.password) if user
         response = Net::HTTP.post_form(uri, params)
@@ -177,7 +177,7 @@ module Openfoodfacts
 
       if self.code && prefix = LOCALE_WEBURL_PREFIXES[locale]
         path = "#{prefix}/#{self.code}"
-        "http://#{locale}.#{domain}/#{path}"
+        "https://#{locale}.#{domain}/#{path}"
       end
     end
 
