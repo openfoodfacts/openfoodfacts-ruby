@@ -41,7 +41,7 @@ module Openfoodfacts
       # Search products
       #
       def search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: DEFAULT_DOMAIN)
-        terms = URI::encode(terms)
+        terms = CGI.escape(terms)
         path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         url = "https://#{locale}.#{domain}/#{path}"
         json = open(url).read
@@ -82,7 +82,7 @@ module Openfoodfacts
       end
 
       def from_website_list(html, locale: 'world')
-        from_html_list(html, 'ul.products li', /\/(\d+)[\/|\Z]/i, locale: 'world')
+        from_html_list(html, 'ul.products li', /\/(\d+)\/?/i, locale: 'world')
       end
 
       # page -1 to fetch all pages
