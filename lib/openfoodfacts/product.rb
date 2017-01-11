@@ -41,7 +41,7 @@ module Openfoodfacts
       # Search products
       #
       def search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: DEFAULT_DOMAIN)
-        terms = URI::encode(terms)
+        terms = CGI.escape(terms)
         path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         url = "https://#{locale}.#{domain}/#{path}"
         json = open(url).read
