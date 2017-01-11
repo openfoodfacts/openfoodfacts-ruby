@@ -26,10 +26,10 @@ module Openfoodfacts
             attributes = {
               "name" => link.text.strip,
               "url" => URI.join(page_url, link.attr('href')).to_s,
-              "products_count" => columns[1].text.to_i,
+              "products_count" => columns[1].text.to_i
             }
 
-            riskiness = columns[2].attr('class')
+            riskiness = columns.last.attr('class')
             if riskiness
               attributes["riskiness"] = riskiness[/level_(\d+)/, 1].to_i
             end
