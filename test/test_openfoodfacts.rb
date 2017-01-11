@@ -52,7 +52,7 @@ class TestOpenfoodfacts < Minitest::Test
 
   def test_it_get_product
     product_code = "3029330003533"
-    
+
     VCR.use_cassette("product_#{product_code}", record: :once, match_requests_on: [:host, :path]) do
       assert_equal ::Openfoodfacts::Product.get(product_code).code, product_code
     end
@@ -66,8 +66,8 @@ class TestOpenfoodfacts < Minitest::Test
       products = ::Openfoodfacts::Product.search(term, page_size: 42)
       first_product = products.first
 
-      assert_match /#{term}/i, products.last["product_name"]
-      assert_match /#{term}/i, ::Openfoodfacts::Product.search(term).last["product_name"]
+      assert_match(/#{term}/i, products.last["product_name"])
+      assert_match(/#{term}/i, ::Openfoodfacts::Product.search(term).last["product_name"])
       assert_equal products.size, 42
     end
 

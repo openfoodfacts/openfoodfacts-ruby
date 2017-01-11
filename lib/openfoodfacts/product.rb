@@ -82,7 +82,7 @@ module Openfoodfacts
       end
 
       def from_website_list(html, locale: 'world')
-        from_html_list(html, 'ul.products li', /\/(\d+)[\/|\Z]/i, locale: 'world')
+        from_html_list(html, 'ul.products li', /\/(\d+)\/?/i, locale: 'world')
       end
 
       # page -1 to fetch all pages
