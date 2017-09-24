@@ -182,6 +182,22 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # Mission
+
+  def test_it_fetches_missions
+    VCR.use_cassette("missions") do
+      refute_empty ::Openfoodfacts::Mission.all(locale: 'fr')
+    end
+  end
+
+  def test_it_fetches_mission
+    VCR.use_cassette("mission", record: :once, match_requests_on: [:host, :path]) do
+      mission = ::Openfoodfacts::Mission.new(url: "https://fr.openfoodfacts.org/mission/informateur-100-produits")
+      mission.fetch
+      refute_empty mission.users
+    end
+  end
+
   # Press
 
   def test_it_fetches_press
