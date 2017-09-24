@@ -150,6 +150,30 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # Nutrition Grades
+
+  def test_it_fetches_nutrition_grades
+    VCR.use_cassette("nutrition_grades") do
+      nutrition_grades = ::Openfoodfacts::NutritionGrade.all
+      assert_includes nutrition_grades.map { |nutrition_grade| nutrition_grade['name'] }, "Unknown"
+    end
+  end
+
+  def test_it_fetches_nutrition_grades_for_locale
+    VCR.use_cassette("nutrition_grades_locale") do
+      nutrition_grades = ::Openfoodfacts::NutritionGrade.all(locale: 'fr')
+      assert_includes nutrition_grades.map { |nutrition_grade| nutrition_grade['name'] }, "Inconnu"
+    end
+  end
+
+  def test_it_fetches_products_for_nutrition_grade
+    nutrition_grade = ::Openfoodfacts::NutritionGrade.new("url" => "https://world.openfoodfacts.org/nutrition-grade/c")
+    VCR.use_cassette("products_for_nutrition_grade") do
+      products_for_nutrition_grade = nutrition_grade.products(page: -1)
+      refute_empty products_for_nutrition_grade
+    end
+  end
+
   # Product states
 
   def test_it_fetches_product_states
