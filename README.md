@@ -35,13 +35,16 @@ All data is available for World, French, UK and US version for now. You should u
 - City
 - Contributor
 - Country
+- EntryDate
 - Faq
 - IngredientThatMayBeFromPalmOil
 - Label
+- LastEditDate
 - Language
 - Locale
 - ManufacturingPlace
 - Mission
+- NumberOfIngredients
 - NutritionGrade
 - Origin
 - PackagerCode
