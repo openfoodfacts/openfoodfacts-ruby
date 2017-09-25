@@ -150,6 +150,30 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # Languages
+
+  def test_it_fetches_languages
+    VCR.use_cassette("languages") do
+      languages = ::Openfoodfacts::Language.all
+      assert_includes languages.map { |language| language['name'] }, "French"
+    end
+  end
+
+  def test_it_fetches_languages_for_locale
+    VCR.use_cassette("languages_locale") do
+      languages = ::Openfoodfacts::Language.all(locale: 'fr')
+      assert_includes languages.map { |language| language['name'] }, "Anglais"
+    end
+  end
+
+  def test_it_fetches_products_for_language
+    language = ::Openfoodfacts::Language.new("url" => "https://world.openfoodfacts.org/language/french")
+    VCR.use_cassette("products_for_language") do
+      products_for_language = language.products(page: -1)
+      refute_empty products_for_language
+    end
+  end
+
   # Product states
 
   def test_it_fetches_product_states

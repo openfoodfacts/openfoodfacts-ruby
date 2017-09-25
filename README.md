@@ -38,6 +38,7 @@ All data is available for World, French, UK and US version for now. You should u
 - Faq
 - IngredientThatMayBeFromPalmOil
 - Label
+- Language
 - Locale
 - ManufacturingPlace
 - Mission

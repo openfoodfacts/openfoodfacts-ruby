@@ -90,7 +90,7 @@ module Openfoodfacts
         if page == -1
           if products_count # Avoid one call
             pages_count = (products_count.to_f / 20).ceil
-            (1..pages_count).map { |page| from_website_page(page_url, page: page) }.flatten
+            (1..pages_count).map { |page_i| from_website_page(page_url, page: page_i) }.flatten
           else
             products = []
 
