@@ -150,6 +150,30 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # Languages
+
+  def test_it_fetches_languages
+    VCR.use_cassette("languages") do
+      languages = ::Openfoodfacts::Language.all
+      assert_includes languages.map { |language| language['name'] }, "French"
+    end
+  end
+
+  def test_it_fetches_languages_for_locale
+    VCR.use_cassette("languages_locale") do
+      languages = ::Openfoodfacts::Language.all(locale: 'fr')
+      assert_includes languages.map { |language| language['name'] }, "Anglais"
+    end
+  end
+
+  def test_it_fetches_products_for_language
+    language = ::Openfoodfacts::Language.new("url" => "https://world.openfoodfacts.org/language/french")
+    VCR.use_cassette("products_for_language") do
+      products_for_language = language.products(page: -1)
+      refute_empty products_for_language
+    end
+  end
+
   # Product states
 
   def test_it_fetches_product_states
@@ -227,6 +251,22 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_faq
     VCR.use_cassette("faq") do
       refute_empty ::Openfoodfacts::Faq.items(locale: 'fr')
+    end
+  end
+
+  # Mission
+
+  def test_it_fetches_missions
+    VCR.use_cassette("missions") do
+      refute_empty ::Openfoodfacts::Mission.all(locale: 'fr')
+    end
+  end
+
+  def test_it_fetches_mission
+    VCR.use_cassette("mission", record: :once, match_requests_on: [:host, :path]) do
+      mission = ::Openfoodfacts::Mission.new(url: "https://fr.openfoodfacts.org/mission/informateur-100-produits")
+      mission.fetch
+      refute_empty mission.users
     end
   end
 
