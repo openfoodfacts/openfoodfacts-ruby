@@ -246,6 +246,30 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # Number of Ingredients
+
+  def test_it_fetches_numbers_of_ingredients
+    VCR.use_cassette("numbers_of_ingredients") do
+      numbers_of_ingredients = ::Openfoodfacts::NumberOfIngredients.all
+      assert_includes numbers_of_ingredients.map { |number_of_ingredients| number_of_ingredients['name'] }, "38"
+    end
+  end
+
+  def test_it_fetches_numbers_of_ingredients_for_locale
+    VCR.use_cassette("number_of_ingredients_locale") do
+      numbers_of_ingredients = ::Openfoodfacts::NumberOfIngredients.all(locale: 'fr')
+      assert_includes numbers_of_ingredients.map { |number_of_ingredients| number_of_ingredients['name'] }, "38"
+    end
+  end
+
+  def test_it_fetches_products_for_number_of_ingredients
+    number_of_ingredients = ::Openfoodfacts::NumberOfIngredients.new("url" => "https://world.openfoodfacts.org/number-of-ingredients/38")
+    VCR.use_cassette("products_for_number_of_ingredients") do
+      products_for_number_of_ingredients = number_of_ingredients.products(page: -1)
+      refute_empty products_for_number_of_ingredients
+    end
+  end
+
   # FAQ
 
   def test_it_fetches_faq
