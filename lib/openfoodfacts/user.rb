@@ -6,7 +6,6 @@ module Openfoodfacts
     class << self
 
       # Login
-      # WARNING SECURITY: It is not made throught HTTPS Secure so password can be read on the way.
       #
       def login(user_id, password, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         path = 'cgi/session.pl'
