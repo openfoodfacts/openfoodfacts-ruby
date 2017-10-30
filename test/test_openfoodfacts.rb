@@ -246,7 +246,7 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
-  # Entry date
+  # Last edit date
 
   def test_it_fetches_last_edit_dates
     VCR.use_cassette("last_edit_dates") do
