@@ -13,9 +13,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_locales
     VCR.use_cassette("index") do
       locales = ::Openfoodfacts::Locale.all
-      assert_includes locales, "world"
-      assert_includes locales, "fr"
-      assert_includes locales, "be-fr"
+      assert_includes locales.map { |locale| locale['code'] }, "gd"
     end
   end
 
@@ -59,7 +57,7 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_that_it_search
-    term = "Chocolat"
+    term = "coca"
     first_product = nil
 
     VCR.use_cassette("search_#{term}") do
