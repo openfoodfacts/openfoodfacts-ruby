@@ -1,3 +1,7 @@
+## 0.5.1 (October 30, 2017) ##
+
+* Fix Locales
+
 ## 0.5.0 (October 30, 2017) ##
 
 * Add Entry and Last Edit Date
