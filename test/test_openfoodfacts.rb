@@ -121,7 +121,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_with_additive
     additive = ::Openfoodfacts::Additive.new("url" => "https://world.openfoodfacts.org/additive/e452i-sodium-polyphosphate")
     VCR.use_cassette("products_with_additive") do
-      products_with_additive = additive.products(page: -1)
+      products_with_additive = additive.products(page: 1)
       refute_empty products_with_additive
     end
   end
@@ -145,7 +145,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_brand
     brand = ::Openfoodfacts::Brand.new("url" => "https://world.openfoodfacts.org/brand/bel")
     VCR.use_cassette("products_for_brand") do
-      products_for_brand = brand.products(page: -1)
+      products_for_brand = brand.products(page: 1)
       refute_empty products_for_brand
     end
   end
@@ -169,7 +169,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_nutrition_grade
     nutrition_grade = ::Openfoodfacts::NutritionGrade.new("url" => "https://world.openfoodfacts.org/nutrition-grade/c")
     VCR.use_cassette("products_for_nutrition_grade") do
-      products_for_nutrition_grade = nutrition_grade.products(page: -1)
+      products_for_nutrition_grade = nutrition_grade.products(page: 1)
       refute_empty products_for_nutrition_grade
     end
   end
@@ -193,7 +193,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_language
     language = ::Openfoodfacts::Language.new("url" => "https://world.openfoodfacts.org/language/french")
     VCR.use_cassette("products_for_language") do
-      products_for_language = language.products(page: -1)
+      products_for_language = language.products(page: 1)
       refute_empty products_for_language
     end
   end
@@ -217,7 +217,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_state
     product_state = ::Openfoodfacts::ProductState.new("url" => "https://world.openfoodfacts.org/state/photos-uploaded", "products_count" => 22)
     VCR.use_cassette("products_for_state") do
-      products_for_state = product_state.products(page: -1)
+      products_for_state = product_state.products(page: 1)
       refute_empty products_for_state
     end
   end
@@ -241,7 +241,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_entry_date
     entry_date = ::Openfoodfacts::EntryDate.new("url" => "https://world.openfoodfacts.org/entry-date/2014-04-17")
     VCR.use_cassette("products_for_entry_date") do
-      products_for_entry_date = entry_date.products(page: -1)
+      products_for_entry_date = entry_date.products(page: 1)
       refute_empty products_for_entry_date
     end
   end
@@ -265,7 +265,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_last_edit_date
     last_edit_date = ::Openfoodfacts::LastEditDate.new("url" => "https://world.openfoodfacts.org/last-edit-date/2013-11-11")
     VCR.use_cassette("products_for_last_edit_date") do
-      products_for_last_edit_date = last_edit_date.products(page: -1)
+      products_for_last_edit_date = last_edit_date.products(page: 1)
       refute_empty products_for_last_edit_date
     end
   end
@@ -289,7 +289,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_products_for_number_of_ingredients
     number_of_ingredients = ::Openfoodfacts::NumberOfIngredients.new("url" => "https://world.openfoodfacts.org/number-of-ingredients/38")
     VCR.use_cassette("products_for_number_of_ingredients") do
-      products_for_number_of_ingredients = number_of_ingredients.products(page: -1)
+      products_for_number_of_ingredients = number_of_ingredients.products(page: 1)
       refute_empty products_for_number_of_ingredients
     end
   end
