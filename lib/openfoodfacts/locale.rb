@@ -12,9 +12,9 @@ module Openfoodfacts
         body = open(url).read
         dom = Nokogiri.parse(body)
 
-        dom.css('ul li a').map { |locale_link|
-          locale_from_link(locale_link.attr('href'))
-        }.uniq.sort
+        dom.css('#select_country option').map { |option|
+          locale_from_option(option, domain: domain)
+        }.compact
       end
 
       # Return locale from link
@@ -22,6 +22,17 @@ module Openfoodfacts
       def locale_from_link(link)
         locale = link[/^https?:\/\/([^.]+)\./i, 1]
         locale unless locale.nil? || locale == 'static'
+      end
+
+      # Return locale from option
+      #
+      def locale_from_option(option, domain: DEFAULT_DOMAIN)
+        value = option.attr('value')
+        {
+          "name" => option.text.strip,
+          "code" => value,
+          "url" => "https://#{value}.#{domain}"
+        } if value
       end
 
     end
