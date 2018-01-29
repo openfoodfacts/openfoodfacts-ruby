@@ -5,8 +5,9 @@ script: travis_wait 10 bundle exec rake
 rvm:
   - 2.1
   - 2.2
-  - 2.3.5
-  - 2.4.2
+  - 2.3
+  - 2.4
+  - 2.5
   - ruby-head
   - jruby-head
   - rbx-2
@@ -14,7 +15,6 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
-    - rvm: rbx-2
 
 notifications:
   slack: openfoodfacts:oicZXgD1SNoGCA6EXLK6CB7i
