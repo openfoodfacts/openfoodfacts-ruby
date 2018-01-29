@@ -3,7 +3,6 @@ before_install: gem install bundler --version '1.8'
 install: bundle install
 script: travis_wait 10 bundle exec rake
 rvm:
-  - 2.0
   - 2.1
   - 2.2
   - 2.3.5
