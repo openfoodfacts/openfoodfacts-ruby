@@ -103,8 +103,8 @@ class TestOpenfoodfacts < Minitest::Test
 
   def test_it_fetches_additives
     VCR.use_cassette("additives") do
-      additives = ::Openfoodfacts::Additive.all(locale: 'fr') # FR to have riskiness
-      assert_includes additives.map { |additive| additive['url'] }, "https://fr.openfoodfacts.org/additif/e330-acide-citrique"
+      additives = ::Openfoodfacts::Additive.all # World to have riskiness
+      assert_includes additives.map { |additive| additive['url'] }, "https://world.openfoodfacts.org/additive/e330-citric-acid"
       refute_nil additives.detect { |additive| !additive['riskiness'].nil? }
     end
   end
