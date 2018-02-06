@@ -1,3 +1,4 @@
+sudo: false
 language: ruby
 before_install: gem install bundler --version '1.8'
 install: bundle install
@@ -9,12 +10,11 @@ rvm:
   - 2.4
   - 2.5
   - ruby-head
+  - jruby-9.1.9
   - jruby-head
-  - rbx-2
 matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
-
 notifications:
   slack: openfoodfacts:oicZXgD1SNoGCA6EXLK6CB7i
