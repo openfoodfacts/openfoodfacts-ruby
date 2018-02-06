@@ -1,6 +1,6 @@
 environment:
   matrix:
-    - RUBY_VERSION: 21
+    # - RUBY_VERSION: 21 # nokogiri install error
     - RUBY_VERSION: 22
     - RUBY_VERSION: 23
     - RUBY_VERSION: 24
