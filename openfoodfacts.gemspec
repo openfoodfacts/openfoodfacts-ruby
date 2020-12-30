@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'openfoodfacts'
   spec.version       = Openfoodfacts::VERSION
   spec.authors       = ["Nicolas Leger"]
-  spec.email         = ["nicolas.leger@nleger.com"]
+  spec.email         = ["opensource@nleger.com"]
 
   spec.summary       = "Open Food Facts API Wrapper"
   spec.description   = "Open Food Facts API Wrapper, the open database about food."
