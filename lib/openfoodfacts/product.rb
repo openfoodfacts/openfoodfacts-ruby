@@ -1,3 +1,4 @@
+require 'cgi'
 require 'hashie'
 require 'net/http'
 require 'nokogiri'
