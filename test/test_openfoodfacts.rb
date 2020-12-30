@@ -201,14 +201,14 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_product_states
     VCR.use_cassette("product_states") do
       product_states = ::Openfoodfacts::ProductState.all
-      assert_equal "https://world.openfoodfacts.org/state/empty", product_states.last.url
+      assert_equal "https://world.openfoodfacts.org/state/front-photo-not-selected", product_states.last.url
     end
   end
 
   def test_it_fetches_product_states_for_locale
     VCR.use_cassette("product_states_locale") do
       product_states = ::Openfoodfacts::ProductState.all(locale: 'fr')
-      assert_equal "https://fr.openfoodfacts.org/etat/vide", product_states.last.url
+      assert_equal "https://fr.openfoodfacts.org/etat/en:front-photo-not-selected", product_states.last.url
     end
   end
 
@@ -261,7 +261,7 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_it_fetches_products_for_last_edit_date
-    last_edit_date = ::Openfoodfacts::LastEditDate.new("url" => "https://world.openfoodfacts.org/last-edit-date/2013-11-11")
+    last_edit_date = ::Openfoodfacts::LastEditDate.new("url" => "https://world.openfoodfacts.org/last-edit-date/2020-04")
     VCR.use_cassette("products_for_last_edit_date") do
       products_for_last_edit_date = last_edit_date.products(page: 1)
       refute_empty products_for_last_edit_date
