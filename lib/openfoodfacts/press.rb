@@ -8,43 +8,33 @@ module Openfoodfacts
 
     # TODO: Add more locales
     LOCALE_PATHS = {
-      'fr' => 'presse',
-      'uk' => 'press',
-      'us' => 'press',
-      'world' => 'press'
+      'fr' => 'revue-de-presse-fr'
     }
 
     LOCALE_DATE_FORMATS = {
-      'fr' => '%d/%m/%Y',
-      'uk' => '%d/%m/%Y',
-      'us' => '%d/%m/%Y',
-      'world' => '%d/%m/%Y'
+      'fr' => '%d/%m/%Y'
     }
 
     class << self
-      def items(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
+      def items(locale: 'fr', domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
+          date_format = LOCALE_DATE_FORMATS[locale]
+
           html = URI.open("https://#{locale}.#{domain}/#{path}").read
           dom = Nokogiri::HTML.fragment(html)
 
-          titles = dom.css('#main_column li')
+          titles = dom.css('#press_table tbody tr')
           titles.each_with_index.map do |item, index|
-            data = item.inner_html.split(' - ')
+            colums = item.css('td')
 
-            link = Nokogiri::HTML.fragment(data.first).css('a')
+            link = colums[1].css('a')
             attributes = {
-              "title" => link.text.strip,
-              "url" => link.attr('href').value
+              "type" => colums[0].text,
+              "title" => colums[1].text.strip,
+              "url" => link && link.attr('href') && link.attr('href').value,
+              "source" => colums[2].text.strip,
+              "date" => (DateTime.strptime(colums[3].text, date_format) rescue nil)
             }
-
-            last = Nokogiri::HTML.fragment(data.last)
-            if date_format = LOCALE_DATE_FORMATS[locale] and date = last.text.strip[/\d+\/\d+\/\d+\z/, 0]
-              attributes["date"] = DateTime.strptime(date, date_format)
-            end
-
-            if data.length >= 3
-              attributes["source"] = Nokogiri::HTML.fragment(data[-2]).text.strip
-            end
 
             new(attributes)
           end
