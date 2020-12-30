@@ -79,7 +79,7 @@ module Openfoodfacts
       end
 
       def from_jquery_mobile_list(jqm_html)
-        from_html_list(jqm_html, 'ul li:not(#loadmore)', /code=(\d+)\Z/i)
+        from_html_list(jqm_html, 'ul#search_results_list li:not(#loadmore)', /code=(\d+)\Z/i)
       end
 
       def from_website_list(html, locale: 'world')
