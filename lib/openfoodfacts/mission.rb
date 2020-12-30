@@ -1,4 +1,5 @@
 require 'hashie'
+require 'open-uri'
 
 module Openfoodfacts
   class Mission < Hashie::Mash
