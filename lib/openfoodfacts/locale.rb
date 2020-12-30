@@ -10,12 +10,13 @@ module Openfoodfacts
       # Get locales
       #
       def all(domain: DEFAULT_DOMAIN)
-        url = "https://#{domain}/"
-        body = URI.open(url).read
-        dom = Nokogiri.parse(body)
+        path = 'cgi/i18n/countries.pl?_type=query'
+        url = "https://#{GLOBAL}.#{domain}/#{path}"
+        json = URI.open(url).read
+        hash = JSON.parse(json)
 
-        dom.css('#select_country option').map { |option|
-          locale_from_option(option, domain: domain)
+        hash.map { |pair|
+          locale_from_pair(pair, domain: domain)
         }.compact
       end
 
@@ -26,15 +27,15 @@ module Openfoodfacts
         locale unless locale.nil? || locale == 'static'
       end
 
-      # Return locale from option
+      # Return locale from pair
       #
-      def locale_from_option(option, domain: DEFAULT_DOMAIN)
-        value = option.attr('value')
+      def locale_from_pair(pair, domain: DEFAULT_DOMAIN)
+        code = pair.first
         {
-          "name" => option.text.strip,
-          "code" => value,
-          "url" => "https://#{value}.#{domain}"
-        } if value
+          "name" => pair.last.strip,
+          "code" => code,
+          "url" => "https://#{code}.#{domain}"
+        } if code
       end
 
     end
