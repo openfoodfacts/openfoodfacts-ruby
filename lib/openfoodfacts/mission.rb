@@ -1,4 +1,5 @@
 require 'hashie'
+require 'open-uri'
 
 module Openfoodfacts
   class Mission < Hashie::Mash
@@ -15,7 +16,7 @@ module Openfoodfacts
       def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
           url = "https://#{locale}.#{domain}/#{path}"
-          html = open(url).read
+          html = URI.open(url).read
           dom = Nokogiri::HTML.fragment(html)
 
           dom.css('#missions li').map do |mission_dom|
@@ -38,7 +39,7 @@ module Openfoodfacts
     #
     def fetch
       if (self.url)
-        html = open(self.url).read
+        html = URI.open(self.url).read
         dom = Nokogiri::HTML.fragment(html)
 
         description = dom.css('#description').first
