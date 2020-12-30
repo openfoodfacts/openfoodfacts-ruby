@@ -9,7 +9,7 @@ module Openfoodfacts
       #
       def all(domain: DEFAULT_DOMAIN)
         url = "https://#{domain}/"
-        body = open(url).read
+        body = URI.open(url).read
         dom = Nokogiri.parse(body)
 
         dom.css('#select_country option').map { |option|
