@@ -1,12 +1,12 @@
 # Open Food Facts
 
 [![Gem Version](https://badge.fury.io/rb/openfoodfacts.svg)](https://badge.fury.io/rb/openfoodfacts)
-[![Build Status](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby)
-[![Build status](https://ci.appveyor.com/api/projects/status/tarhvc59fw478das/branch/master?svg=true)](https://ci.appveyor.com/project/nicolasleger/openfoodfacts-ruby/branch/master)
+[![Build Status](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby.svg?branch=main)](https://travis-ci.org/openfoodfacts/openfoodfacts-ruby)
+[![Build status](https://ci.appveyor.com/api/projects/status/tarhvc59fw478das/branch/main?svg=true)](https://ci.appveyor.com/project/nicolasleger/openfoodfacts-ruby/branch/main)
 [![Dependency Status](https://gemnasium.com/openfoodfacts/openfoodfacts-ruby.svg)](https://gemnasium.com/openfoodfacts/openfoodfacts-ruby)
 [![Code Climate](https://codeclimate.com/github/openfoodfacts/openfoodfacts-ruby/badges/gpa.svg)](https://codeclimate.com/github/openfoodfacts/openfoodfacts-ruby)
-[![Coverage Status](https://coveralls.io/repos/github/openfoodfacts/openfoodfacts-ruby/badge.svg?branch=master)](https://coveralls.io/github/openfoodfacts/openfoodfacts-ruby?branch=master)
-[![Documentation](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
+[![Coverage Status](https://coveralls.io/repos/github/openfoodfacts/openfoodfacts-ruby/badge.svg?branch=main)](https://coveralls.io/github/openfoodfacts/openfoodfacts-ruby?branch=main)
+[![Documentation](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=main)](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
 
 API Wrapper for [Open Food Facts](https://openfoodfacts.org/), the open database about food.
 
