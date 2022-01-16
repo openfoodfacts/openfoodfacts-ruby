@@ -120,8 +120,19 @@ module Openfoodfacts
           else
             link = tag.css('a').first
 
+            name = link.text.strip
+            img_alt = link.css('img').attr('alt')
+            if (name.nil? || name == '') && img_alt
+              img_alt_text = img_alt.to_s.strip
+              name = if img_alt_text.include?(':')
+                img_alt_text.split(':').last.strip
+              else
+                img_alt_text[/\s+([^\s]+)$/, 1]
+              end
+            end
+
             _klass.new({
-              "name" => link.text.strip,
+              "name" => name,
               "url" => URI.join(page_url, link.attr('href')).to_s,
               "products_count" => tag.css('td')[1].text.to_i
             })
