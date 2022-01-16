@@ -1,9 +1,8 @@
 # Open Food Facts
 
-[![Build Status](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml)
 [![Gem Version](https://badge.fury.io/rb/openfoodfacts.svg)](https://badge.fury.io/rb/openfoodfacts)
-[![Code Climate](https://codeclimate.com/github/openfoodfacts/openfoodfacts-ruby/badges/gpa.svg)](https://codeclimate.com/github/openfoodfacts/openfoodfacts-ruby)
-[![Coverage Status](https://coveralls.io/repos/github/openfoodfacts/openfoodfacts-ruby/badge.svg?branch=main)](https://coveralls.io/github/openfoodfacts/openfoodfacts-ruby?branch=main)
+[![Build Status](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml)
+[![RuboCop](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/rubocop-analysis.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/rubocop-analysis.yml)
 [![Documentation](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
 
 API Wrapper for [Open Food Facts](https://openfoodfacts.org/), the open database about food.
