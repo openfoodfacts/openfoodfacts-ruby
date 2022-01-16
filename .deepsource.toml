@@ -1,0 +1,15 @@
+version = 1
+
+test_patterns = [
+  "test/**",
+  "*_test.rb"
+]
+
+exclude_patterns = [
+  "vendor/**",
+  "**/examples/**"
+]
+
+[[analyzers]]
+name = "ruby"
+enabled = true
