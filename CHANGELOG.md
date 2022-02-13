@@ -2,6 +2,13 @@
 
 * Fix Locales
 
+### [0.6.1](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.6.0...v0.6.1) (2022-02-13)
+
+
+### Bug Fixes
+
+* categories list ([b12fead](https://github.com/openfoodfacts/openfoodfacts-ruby/commit/b12fead730990e80bff66d262b744e96f644e752))
+
 ## 0.5.0 (October 30, 2017) ##
 
 * Add Entry and Last Edit Date
