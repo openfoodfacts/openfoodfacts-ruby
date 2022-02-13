@@ -201,14 +201,14 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_product_states
     VCR.use_cassette("product_states") do
       product_states = ::Openfoodfacts::ProductState.all
-      assert_equal "https://world.openfoodfacts.org/state/front-photo-not-selected", product_states.last.url
+      assert_includes product_states.map { |product_state| product_state['url'] }, "https://world.openfoodfacts.org/state/to-be-completed"
     end
   end
 
   def test_it_fetches_product_states_for_locale
     VCR.use_cassette("product_states_locale") do
       product_states = ::Openfoodfacts::ProductState.all(locale: 'fr')
-      assert_equal "https://fr.openfoodfacts.org/etat/en:front-photo-not-selected", product_states.last.url
+      assert_includes product_states.map { |product_state| product_state['url'] }, "https://fr.openfoodfacts.org/etat/a-completer"
     end
   end
 
