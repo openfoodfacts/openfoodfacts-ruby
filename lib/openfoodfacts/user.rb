@@ -30,7 +30,8 @@ module Openfoodfacts
     # Login
     #
     def login(locale: DEFAULT_LOCALE)
-      if user = self.class.login(self.user_id, self.password, locale: locale)
+      user = self.class.login(self.user_id, self.password, locale: locale)
+      if user
         self.name = user.name
         self
       end
