@@ -10,7 +10,7 @@ module Openfoodfacts
       # Get locales
       #
       def all(domain: DEFAULT_DOMAIN)
-        path = 'cgi/i18n/countries.pl?_type=query'
+        path = "cgi/countries.pl"
         url = "https://#{GLOBAL}.#{domain}/#{path}"
         json = URI.open(url).read
         hash = JSON.parse(json)

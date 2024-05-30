@@ -6,7 +6,7 @@ require 'open-uri'
 
 module Openfoodfacts
   class Product < Hashie::Mash
-
+    # disable_warnings
     # TODO: Add more locales
     LOCALE_WEBURL_PREFIXES = {
       'fr' => 'produit',
@@ -34,7 +34,8 @@ module Openfoodfacts
       #
       def url(code, locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if code
-          path = "api/v0/produit/#{code}.json"
+          prefix = LOCALE_WEBURL_PREFIXES[locale]
+          path = "api/v2/#{prefix}/#{code}.json"
           "https://#{locale}.#{domain}/#{path}"
         end
       end
@@ -43,13 +44,15 @@ module Openfoodfacts
       #
       def search(terms, locale: DEFAULT_LOCALE, page: 1, page_size: 20, sort_by: 'unique_scans_n', domain: DEFAULT_DOMAIN)
         terms = CGI.escape(terms)
-        path = "cgi/search.pl?search_terms=#{terms}&jqm=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
+        path = "cgi/search.pl?search_terms=#{terms}&json=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         url = "https://#{locale}.#{domain}/#{path}"
         json = URI.open(url).read
         hash = JSON.parse(json)
-        html = hash["jqm"]
-
-        from_jquery_mobile_list(html)
+        products = []
+        hash["products"].each do |data|
+          products << new(data)
+        end
+        products
       end
       alias_method :where, :search
 
@@ -76,10 +79,6 @@ module Openfoodfacts
           new(attributes)
         end
 
-      end
-
-      def from_jquery_mobile_list(jqm_html)
-        from_html_list(jqm_html, 'ul#search_results_list li:not(#loadmore)', /code=(\d+)\Z/i)
       end
 
       def from_website_list(html, locale: 'world')
@@ -145,9 +144,9 @@ module Openfoodfacts
     # Fetch product
     #
     def fetch
-      if (self.code)
+      if self.code
         product = self.class.get(self.code)
-        self.merge!(product)
+        self.merge!(product) if product
       end
 
       self

@@ -17,6 +17,7 @@ module Openfoodfacts
         }
 
         response = Net::HTTP.post_form(uri, params)
+        return nil if response.code != "200"
         data = JSON.parse(response.body)
 
         if data['user_id']
