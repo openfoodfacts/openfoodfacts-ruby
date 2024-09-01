@@ -5,8 +5,10 @@
 [![RuboCop](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/rubocop-analysis.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/rubocop-analysis.yml)
 [![Documentation](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
 
-API Wrapper for [Open Food Facts](https://openfoodfacts.org/), the open database about food. We have a similar package for cosmetics: https://github.com/openfoodfacts/openbeautyfacts-ruby
-Note: This package needs updates for the newest APIs.
+- API Wrapper for [Open Food Facts](https://openfoodfacts.org/), the open database about food.
+- We have a similar package for cosmetics: https://github.com/openfoodfacts/openbeautyfacts-ruby
+- Note: This package needs updates for the newest APIs.
+- Please see on https://wiki.openfoodfacts.org/API/Ruby how to join the community to help
 
 ## Installation
 
