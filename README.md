@@ -1,4 +1,4 @@
-# Open Food Facts
+# Open Food Facts Ruby SDK
 
 [![Gem Version](https://badge.fury.io/rb/openfoodfacts.svg)](https://badge.fury.io/rb/openfoodfacts)
 [![Build Status](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml)
