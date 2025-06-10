@@ -41,12 +41,7 @@ module Openfoodfacts
     # Centralized HTTP client method with User-Agent header
     #
     def http_get(url)
-      user_agent = ENV['OPENFOODFACTS_USER_AGENT']
-      if user_agent && !user_agent.empty?
-        URI.open(url, "User-Agent" => user_agent)
-      else
-        URI.open(url)
-      end
+      URI.parse(url).open("User-Agent" => ENV.fetch('OPENFOODFACTS_USER_AGENT', nil))
     end
 
     # Return locale from link
