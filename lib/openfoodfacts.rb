@@ -38,6 +38,17 @@ module Openfoodfacts
 
   class << self
 
+    # Centralized HTTP client method with User-Agent header
+    #
+    def http_get(url)
+      user_agent = ENV['OPENFOODFACTS_USER_AGENT']
+      if user_agent && !user_agent.empty?
+        URI.open(url, "User-Agent" => user_agent)
+      else
+        URI.open(url)
+      end
+    end
+
     # Return locale from link
     #
     def locale_from_link(link)

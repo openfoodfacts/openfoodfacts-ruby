@@ -1,6 +1,5 @@
 require 'hashie'
 require 'nokogiri'
-require 'open-uri'
 
 module Openfoodfacts
   class Faq < Hashie::Mash
@@ -16,7 +15,7 @@ module Openfoodfacts
     class << self
       def items(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
-          html = URI.open("https://#{locale}.#{domain}/#{path}").read
+          html = Openfoodfacts.http_get("https://#{locale}.#{domain}/#{path}").read
           dom = Nokogiri::HTML.fragment(html)
 
           titles = dom.css('#main_column h2')

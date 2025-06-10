@@ -1,5 +1,3 @@
-require 'open-uri'
-
 module Openfoodfacts
   class Locale < String
 
@@ -12,7 +10,7 @@ module Openfoodfacts
       def all(domain: DEFAULT_DOMAIN)
         path = "cgi/countries.pl"
         url = "https://#{GLOBAL}.#{domain}/#{path}"
-        json = URI.open(url).read
+        json = Openfoodfacts.http_get(url).read
         hash = JSON.parse(json)
 
         hash.map { |pair|
