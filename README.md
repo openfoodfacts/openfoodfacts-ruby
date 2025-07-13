@@ -1,14 +1,20 @@
 # Open Food Facts Ruby SDK
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://static.openfoodfacts.org/images/logos/off-logo-horizontal-dark.png?refresh_github_cache=1">
+  <source media="(prefers-color-scheme: light)" srcset="https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.png?refresh_github_cache=1">
+  <img height="48" src="https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg"/>
+</picture>
+
 [![Gem Version](https://badge.fury.io/rb/openfoodfacts.svg)](https://badge.fury.io/rb/openfoodfacts)
 [![Build Status](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/ruby.yml)
 [![RuboCop](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/rubocop-analysis.yml/badge.svg)](https://github.com/openfoodfacts/openfoodfacts-ruby/actions/workflows/rubocop-analysis.yml)
 [![Documentation](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby.svg?branch=master)](https://inch-ci.org/github/openfoodfacts/openfoodfacts-ruby)
 
 - API Wrapper for [Open Food Facts](https://openfoodfacts.org/), the open database about food.
-- We have a similar package for cosmetics: https://github.com/openfoodfacts/openbeautyfacts-ruby
+- We [have a similar package for cosmetics](https://github.com/openfoodfacts/openbeautyfacts-ruby).
 - Note: This package needs updates for the newest APIs.
-- Please see on https://wiki.openfoodfacts.org/API/Ruby how to join the community to help
+- Please see on the wiki [how to join the community to help with the Ruby package](https://wiki.openfoodfacts.org/API/Ruby)
 
 ## Installation
 
