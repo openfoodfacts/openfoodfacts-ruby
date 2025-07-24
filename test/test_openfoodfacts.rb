@@ -104,7 +104,7 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_additives
     VCR.use_cassette("additives") do
       additives = ::Openfoodfacts::Additive.all # World to have riskiness
-      assert_includes additives.map { |additive| additive['url'] }, "https://world.openfoodfacts.org/additive/e330-citric-acid"
+      assert_includes additives.map { |additive| additive['url'] }, "https://world.openfoodfacts.org/facets/additives/e330-citric-acid"
       refute_nil additives.detect { |additive| !additive['riskiness'].nil? }
     end
   end
@@ -112,12 +112,12 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_additives_for_locale
     VCR.use_cassette("additives_locale") do
       additives = ::Openfoodfacts::Additive.all(locale: 'fr')
-      assert_includes additives.map { |additive| additive['url'] }, "https://fr.openfoodfacts.org/additif/e330-acide-citrique"
+      assert_includes additives.map { |additive| additive['url'] }, "https://fr.openfoodfacts.org/facets/additifs/e330-acide-citrique"
     end
   end
 
   def test_it_fetches_products_with_additive
-    additive = ::Openfoodfacts::Additive.new("url" => "https://world.openfoodfacts.org/additive/e452i-sodium-polyphosphate")
+    additive = ::Openfoodfacts::Additive.new("url" => "https://world.openfoodfacts.org/facets/additives/e452i-sodium-polyphosphate")
     VCR.use_cassette("products_with_additive") do
       products_with_additive = additive.products(page: 1)
       refute_empty products_with_additive
@@ -129,19 +129,19 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_brands
     VCR.use_cassette("brands") do
       brands = ::Openfoodfacts::Brand.all
-      assert_includes brands.map { |brand| brand['name'] }, "Carrefour"
+      assert_includes brands.map { |brand| brand['name'] }, "Heinz"
     end
   end
 
   def test_it_fetches_brands_for_locale
     VCR.use_cassette("brands_locale") do
       brands = ::Openfoodfacts::Brand.all(locale: 'fr')
-      assert_includes brands.map { |brand| brand['name'] }, "Loue"
+      assert_includes brands.map { |brand| brand['name'] }, "gerble"
     end
   end
 
   def test_it_fetches_products_for_brand
-    brand = ::Openfoodfacts::Brand.new("url" => "https://world.openfoodfacts.org/brand/bel")
+    brand = ::Openfoodfacts::Brand.new("url" => "https://world.openfoodfacts.org/facets/brands/bel")
     VCR.use_cassette("products_for_brand") do
       products_for_brand = brand.products(page: 1)
       refute_empty products_for_brand
@@ -165,7 +165,7 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_it_fetches_products_for_nutrition_grade
-    nutrition_grade = ::Openfoodfacts::NutritionGrade.new("url" => "https://world.openfoodfacts.org/nutrition-grade/c")
+    nutrition_grade = ::Openfoodfacts::NutritionGrade.new("url" => "https://world.openfoodfacts.org/facets/nutrition-grades/c")
     VCR.use_cassette("products_for_nutrition_grade") do
       products_for_nutrition_grade = nutrition_grade.products(page: 1)
       refute_empty products_for_nutrition_grade
@@ -189,7 +189,7 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_it_fetches_products_for_language
-    language = ::Openfoodfacts::Language.new("url" => "https://world.openfoodfacts.org/language/french")
+    language = ::Openfoodfacts::Language.new("url" => "https://world.openfoodfacts.org/facets/languages/french")
     VCR.use_cassette("products_for_language") do
       products_for_language = language.products(page: 1)
       refute_empty products_for_language
@@ -201,19 +201,19 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_product_states
     VCR.use_cassette("product_states") do
       product_states = ::Openfoodfacts::ProductState.all
-      assert_includes product_states.map { |product_state| product_state['url'] }, "https://world.openfoodfacts.org/state/to-be-completed"
+      assert_includes product_states.map { |product_state| product_state['url'] }, "https://world.openfoodfacts.org/facets/states/to-be-completed"
     end
   end
 
   def test_it_fetches_product_states_for_locale
     VCR.use_cassette("product_states_locale") do
       product_states = ::Openfoodfacts::ProductState.all(locale: 'fr')
-      assert_includes product_states.map { |product_state| product_state['url'] }, "https://fr.openfoodfacts.org/etat/a-completer"
+      assert_includes product_states.map { |product_state| product_state['url'] }, "https://fr.openfoodfacts.org/facets/etats/a-completer"
     end
   end
 
   def test_it_fetches_products_for_state
-    product_state = ::Openfoodfacts::ProductState.new("url" => "https://world.openfoodfacts.org/state/photos-uploaded", "products_count" => 22)
+    product_state = ::Openfoodfacts::ProductState.new("url" => "https://world.openfoodfacts.org/facets/states/photos-uploaded", "products_count" => 22)
     VCR.use_cassette("products_for_state") do
       products_for_state = product_state.products(page: 1)
       refute_empty products_for_state
@@ -225,19 +225,19 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_entry_dates
     VCR.use_cassette("entry_dates") do
       entry_dates = ::Openfoodfacts::EntryDate.all
-      assert_includes entry_dates.map { |entry_date| entry_date['name'] }, "2017-03-09"
+      assert_includes entry_dates.map { |entry_date| entry_date['name'] }, "2025-03"
     end
   end
 
   def test_it_fetches_entry_dates_for_locale
     VCR.use_cassette("entry_dates_locale") do
       entry_dates = ::Openfoodfacts::EntryDate.all(locale: 'fr')
-      assert_includes entry_dates.map { |entry_date| entry_date['name'] }, "2017-03-09"
+      assert_includes entry_dates.map { |entry_date| entry_date['name'] }, "2025-03"
     end
   end
 
   def test_it_fetches_products_for_entry_date
-    entry_date = ::Openfoodfacts::EntryDate.new("url" => "https://world.openfoodfacts.org/entry-date/2014-04-17")
+    entry_date = ::Openfoodfacts::EntryDate.new("url" => "https://world.openfoodfacts.org/facets/entry-dates/2014-04-17")
     VCR.use_cassette("products_for_entry_date") do
       products_for_entry_date = entry_date.products(page: 1)
       refute_empty products_for_entry_date
@@ -249,19 +249,19 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_last_edit_dates
     VCR.use_cassette("last_edit_dates") do
       last_edit_dates = ::Openfoodfacts::LastEditDate.all
-      assert_includes last_edit_dates.map { |last_edit_date| last_edit_date['name'] }, "2017-03-23"
+      assert_includes last_edit_dates.map { |last_edit_date| last_edit_date['name'] }, "2025-04"
     end
   end
 
   def test_it_fetches_last_edit_dates_for_locale
     VCR.use_cassette("last_edit_dates_locale") do
       last_edit_dates = ::Openfoodfacts::LastEditDate.all(locale: 'fr')
-      assert_includes last_edit_dates.map { |last_edit_date| last_edit_date['name'] }, "2017-03-23"
+      assert_includes last_edit_dates.map { |last_edit_date| last_edit_date['name'] }, "2025-04"
     end
   end
 
   def test_it_fetches_products_for_last_edit_date
-    last_edit_date = ::Openfoodfacts::LastEditDate.new("url" => "https://world.openfoodfacts.org/last-edit-date/2020-04")
+    last_edit_date = ::Openfoodfacts::LastEditDate.new("url" => "https://world.openfoodfacts.org/facets/last-edit-dates/2020-04")
     VCR.use_cassette("products_for_last_edit_date") do
       products_for_last_edit_date = last_edit_date.products(page: 1)
       refute_empty products_for_last_edit_date
@@ -285,8 +285,8 @@ class TestOpenfoodfacts < Minitest::Test
   end
 
   def test_it_fetches_products_for_number_of_ingredients
-    number_of_ingredients = ::Openfoodfacts::NumberOfIngredients.new("url" => "https://world.openfoodfacts.org/number-of-ingredients/38")
-    VCR.use_cassette("products_for_number_of_ingredients") do
+    number_of_ingredients = ::Openfoodfacts::NumberOfIngredients.new("url" => "https://world.openfoodfacts.org/facets/numbers-of-ingredients/38")
+    VCR.use_cassette("products_for_number_of_ingredients", record: :once, match_requests_on: [:host, :path]) do
       products_for_number_of_ingredients = number_of_ingredients.products(page: 1)
       refute_empty products_for_number_of_ingredients
     end
@@ -326,4 +326,29 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # HTTP Client
+
+  def test_http_get_user_agent
+    # Test with User-Agent set
+    ENV['OPENFOODFACTS_USER_AGENT'] = 'test-agent'
+    uri_mock = Minitest::Mock.new
+    uri_mock.expect :open, nil, [{"User-Agent" => 'test-agent'}]
+    
+    URI.stub :parse, uri_mock do
+      ::Openfoodfacts.http_get("https://example.com")
+    end
+    
+    assert_mock uri_mock
+
+    # Test without User-Agent
+    ENV.delete('OPENFOODFACTS_USER_AGENT')
+    uri_mock = Minitest::Mock.new
+    uri_mock.expect :open, nil, [{}]
+    
+    URI.stub :parse, uri_mock do
+      ::Openfoodfacts.http_get("https://example.com")
+    end
+    
+    assert_mock uri_mock
+  end
 end
