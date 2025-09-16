@@ -2,6 +2,13 @@
 
 * Fix Locales
 
+## [0.6.3](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.6.2...v0.6.3) (2025-08-14)
+
+
+### Bug Fixes
+
+* Update API paths ([d383f5b](https://github.com/openfoodfacts/openfoodfacts-ruby/commit/d383f5b90744d443860407a942a5a16dc270cac4))
+
 ### [0.6.2](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.6.1...v0.6.2) (2022-02-13)
 
 
