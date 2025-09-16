@@ -1,6 +1,5 @@
 require 'hashie'
 require 'nokogiri'
-require 'open-uri'
 require 'time'
 
 module Openfoodfacts
@@ -20,7 +19,7 @@ module Openfoodfacts
         if path = LOCALE_PATHS[locale]
           date_format = LOCALE_DATE_FORMATS[locale]
 
-          html = URI.open("https://#{locale}.#{domain}/#{path}").read
+          html = Openfoodfacts.http_get("https://#{locale}.#{domain}/#{path}").read
           dom = Nokogiri::HTML.fragment(html)
 
           titles = dom.css('#press_table tbody tr')

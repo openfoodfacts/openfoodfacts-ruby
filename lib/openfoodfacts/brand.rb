@@ -17,7 +17,7 @@ module Openfoodfacts
       #
       def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
         if path = LOCALE_PATHS[locale]
-          Product.tags_from_page(self, "https://#{locale}.#{domain}/#{path}")
+          Product.tags_from_page(self, "https://#{locale}.#{domain}/facets/#{path}")
         end
       end
 

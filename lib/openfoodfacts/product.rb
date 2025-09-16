@@ -2,7 +2,6 @@ require 'cgi'
 require 'hashie'
 require 'net/http'
 require 'nokogiri'
-require 'open-uri'
 
 module Openfoodfacts
   class Product < Hashie::Mash
@@ -22,7 +21,7 @@ module Openfoodfacts
       def get(code, locale: DEFAULT_LOCALE)
         if code
           product_url = url(code, locale: locale)
-          json = URI.open(product_url).read
+          json = Openfoodfacts.http_get(product_url).read
           hash = JSON.parse(json)
 
           new(hash["product"]) if !hash["status"].nil? && hash["status"] == 1
@@ -46,7 +45,7 @@ module Openfoodfacts
         terms = CGI.escape(terms)
         path = "cgi/search.pl?search_terms=#{terms}&json=1&page=#{page}&page_size=#{page_size}&sort_by=#{sort_by}"
         url = "https://#{locale}.#{domain}/#{path}"
-        json = URI.open(url).read
+        json = Openfoodfacts.http_get(url).read
         hash = JSON.parse(json)
         products = []
         hash["products"].each do |data|
@@ -104,13 +103,13 @@ module Openfoodfacts
             products
           end
         else
-          html = URI.open("#{page_url}/#{page}").read
+          html = Openfoodfacts.http_get("#{page_url}/#{page}").read
           from_website_list(html, locale: Locale.locale_from_link(page_url))
         end
       end
 
       def tags_from_page(_klass, page_url, &custom_tag_parsing)
-        html = URI.open(page_url).read
+        html = Openfoodfacts.http_get(page_url).read
         dom = Nokogiri::HTML.fragment(html)
 
         dom.css('table#tagstable tbody tr').map do |tag|
