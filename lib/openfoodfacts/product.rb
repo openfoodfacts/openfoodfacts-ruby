@@ -57,16 +57,43 @@ module Openfoodfacts
 
       def from_html_list(html, list_css_selector, code_from_link_regex, locale: 'world')
         dom = Nokogiri::HTML.fragment(html)
-        dom.css(list_css_selector).map do |product|
+        dom.css(list_css_selector).filter_map do |product|
           attributes = {}
 
-          if link = product.css('a').first
-            attributes["product_name"] = link.inner_text.strip
+          # Look for product links with multiple patterns
+          link = product.css('a[href*="/product/"], a[href*="/produit/"]').first
+          link ||= product.css('a').first
+          
+          next unless link
 
-            if code = link.attr('href')[code_from_link_regex, 1]
-              attributes["_id"] = code
-              attributes["code"] = code
+          attributes["product_name"] = link.inner_text.strip
+          href = link.attr('href')
+
+          # Try multiple regex patterns for extracting product codes
+          regexes = [
+            code_from_link_regex,           # Original pattern
+            /\/product\/(\d+)/i,            # /product/123456
+            /\/produit\/(\d+)/i,            # /produit/123456 (French)
+            /\/(\d{8,})/,                   # Any 8+ digit number
+            /product[\/=](\d+)/i,           # product=123456 or product/123456
+            /code[\/=](\d+)/i               # code=123456 or code/123456
+          ]
+
+          code = nil
+          regexes.each do |regex|
+            match = href[regex, 1]
+            if match && match.length >= 8  # Product codes are typically 8+ digits
+              code = match
+              break
             end
+          end
+
+          if code
+            attributes["_id"] = code
+            attributes["code"] = code
+          else
+            # Skip products without valid codes
+            next
           end
 
           if image = product.css('img').first and image_url = image.attr('src')
@@ -81,7 +108,32 @@ module Openfoodfacts
       end
 
       def from_website_list(html, locale: 'world')
-        from_html_list(html, 'ul.products li', /\/(\d+)\/?/i, locale: 'world')
+        # Try multiple CSS selectors to handle different page structures
+        selectors = [
+          'ul.products li',           # Original selector
+          '.search_results article',  # Modern article-based structure
+          '.search-results .result',  # Alternative modern structure
+          'article',                  # Simple article tags
+          '.product-item',           # Product item classes
+          '.product',                # Simple product classes
+          'li[data-product-code]'    # Data attribute based
+        ]
+        
+        dom = Nokogiri::HTML.fragment(html)
+        
+        selectors.each do |selector|
+          elements = dom.css(selector)
+          next if elements.empty?
+          
+          # Check if elements contain product links
+          first_element = elements.first
+          if first_element && (first_element.css('a[href*="/product/"]').any? || first_element.css('a[href*="/produit/"]').any?)
+            return from_html_list(html, selector, /\/(\d+)\/?/i, locale: locale)
+          end
+        end
+        
+        # Fallback: return empty array if no products found
+        []
       end
 
       # page -1 to fetch all pages
@@ -103,7 +155,25 @@ module Openfoodfacts
             products
           end
         else
-          html = Openfoodfacts.http_get("#{page_url}/#{page}").read
+          # Try different URL formats for pagination
+          urls_to_try = [
+            "#{page_url}/#{page}",                    # Original format: /page/1
+            "#{page_url}?page=#{page}",               # Query parameter: ?page=1  
+            "#{page_url}#{page_url.include?('?') ? '&' : '?'}page=#{page}"  # Proper query parameter handling
+          ]
+          
+          html = nil
+          urls_to_try.each do |url|
+            begin
+              html = Openfoodfacts.http_get(url).read
+              break if html && html.length > 0
+            rescue
+              # Continue to next URL format
+              next
+            end
+          end
+          
+          html ||= ""  # Fallback to empty string if all URLs fail
           from_website_list(html, locale: Locale.locale_from_link(page_url))
         end
       end
