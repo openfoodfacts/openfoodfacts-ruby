@@ -17,7 +17,7 @@
        # Setup ruby if a release was created
        - uses: ruby/setup-ruby@v1
          with:
-           ruby-version: 3.0.0
+           ruby-version: ${{ vars.RUBY_VERSION }}
          if: ${{ steps.release.outputs.release_created }}
        # Bundle install
        - run: bundle install
