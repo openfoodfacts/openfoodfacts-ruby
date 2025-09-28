@@ -7,8 +7,10 @@
    release-please:
      runs-on: ubuntu-latest
      permissions:
-       contents: write
-       id-token: write
+       contents: write        # Required to create releases
+       pull-requests: write   # Required to create/update PRs
+       issues: write         # Required to create issue comments
+       id-token: write       # Required for some integrations
      # If you configured a GitHub environment on RubyGems, you must use it here.
      environment: release
      steps:
