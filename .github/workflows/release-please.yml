@@ -1,36 +1,35 @@
- name: Run release-please and publish gem
- on:
-   push:
-     branches:
-       - main
- jobs:
-   release-please:
-     runs-on: ubuntu-latest
-     permissions:
-       contents: write        # Required to create releases
-       pull-requests: write   # Required to create/update PRs
-       issues: write         # Required to create issue comments
-       id-token: write       # Required for some integrations
-     # If you configured a GitHub environment on RubyGems, you must use it here.
-     environment: release
-     steps:
-       - uses: GoogleCloudPlatform/release-please-action@v4
-         id: release
-         with:
-           token: ${{ secrets.GITHUB_TOKEN }}
+name: Run release-please and publish gem
+on:
+  push:
+    branches:
+      - main
+  jobs:
 
-       # Set up
-       - uses: actions/checkout@v5
-         with:
-           persist-credentials: false
-         if: ${{ steps.release.outputs.release_created }}
-       - name: Set up Ruby
-         uses: ruby/setup-ruby@v1
-         with:
-           bundler-cache: true
-           ruby-version: ${{ vars.RUBY_VERSION }}
-         if: ${{ steps.release.outputs.release_created }}
+    release-please:
+      runs-on: ubuntu-latest
+      outputs:
+        release_created: ${{ steps.release.outputs.release_created }}
+      steps:
+        - uses: GoogleCloudPlatform/release-please-action@v4
+          id: release
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
 
-       # Release
-       - uses: rubygems/release-gem@v1
-         if: ${{ steps.release.outputs.release_created }}
+    publish:
+      needs: release-please
+      runs-on: ubuntu-latest
+      if: ${{ needs.release-please.outputs.release_created }}
+      permissions:
+        id-token: write
+        contents: read
+      environment: release
+      steps:
+        - uses: actions/checkout@v5
+        - uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: ${{ vars.RUBY_VERSION }}
+            bundler-cache: true
+        - name: Build gem
+          run: gem build *.gemspec
+        - name: Publish gem
+          uses: rubygems/release-gem@v1
