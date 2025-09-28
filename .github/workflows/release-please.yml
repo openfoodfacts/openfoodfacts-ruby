@@ -3,33 +3,33 @@ on:
   push:
     branches:
       - main
-  jobs:
+jobs:
 
-    release-please:
-      runs-on: ubuntu-latest
-      outputs:
-        release_created: ${{ steps.release.outputs.release_created }}
-      steps:
-        - uses: GoogleCloudPlatform/release-please-action@v4
-          id: release
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    publish:
-      needs: release-please
-      runs-on: ubuntu-latest
-      if: ${{ needs.release-please.outputs.release_created }}
-      permissions:
-        id-token: write
-        contents: read
-      environment: release
-      steps:
-        - uses: actions/checkout@v5
-        - uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: ${{ vars.RUBY_VERSION }}
-            bundler-cache: true
-        - name: Build gem
-          run: gem build *.gemspec
-        - name: Publish gem
-          uses: rubygems/release-gem@v1
+  publish:
+    needs: release-please
+    runs-on: ubuntu-latest
+    if: ${{ needs.release-please.outputs.release_created }}
+    permissions:
+      id-token: write
+      contents: read
+    environment: release
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ vars.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Build gem
+        run: gem build *.gemspec
+      - name: Publish gem
+        uses: rubygems/release-gem@v1
