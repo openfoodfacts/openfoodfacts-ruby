@@ -13,8 +13,6 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    env:
-      GEM_NAME: openfoodfacts
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v4
         id: release
