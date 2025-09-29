@@ -25,3 +25,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: ruby
+          include-component-in-tag: false
