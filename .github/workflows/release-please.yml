@@ -28,8 +28,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: ruby
-          package-name: ${{ env.GEM_NAME }}
-          version-file: "lib/${{ env.GEM_NAME }}/version.rb"
 
   publish:
     needs: release-please
