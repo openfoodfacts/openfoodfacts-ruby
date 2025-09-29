@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'openfoodfacts/additive'
 require_relative 'openfoodfacts/brand'
 require_relative 'openfoodfacts/category'
@@ -32,17 +34,15 @@ require 'nokogiri'
 require 'open-uri'
 
 module Openfoodfacts
-
   DEFAULT_LOCALE = Locale::GLOBAL
   DEFAULT_DOMAIN = 'openfoodfacts.org'
 
   class << self
-
     # Centralized HTTP client method with User-Agent header
     #
     def http_get(url)
       user_agent = ENV.fetch('OPENFOODFACTS_USER_AGENT', nil)
-      headers = user_agent ? {"User-Agent" => user_agent} : {}
+      headers = user_agent ? { 'User-Agent' => user_agent } : {}
       URI.parse(url).open(headers)
     end
 
@@ -69,6 +69,5 @@ module Openfoodfacts
     def product_url(barcode, locale: DEFAULT_LOCALE)
       Product.url(barcode, locale: locale)
     end
-
   end
 end

@@ -1,26 +1,25 @@
+# frozen_string_literal: true
+
 require 'hashie'
 
 module Openfoodfacts
   class EntryDate < Hashie::Mash
-
     # TODO: Add more locales
     LOCALE_PATHS = {
       'fr' => 'dates-d-ajout',
       'uk' => 'entry-dates',
       'us' => 'entry-dates',
       'world' => 'entry-dates'
-    }
+    }.freeze
 
     class << self
-
       # Get entry dates
       #
       def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
-        if path = LOCALE_PATHS[locale]
+        if (path = LOCALE_PATHS[locale])
           Product.tags_from_page(self, "https://#{locale}.#{domain}/facets/#{path}")
         end
       end
-
     end
 
     # Get products with entry date
@@ -28,6 +27,5 @@ module Openfoodfacts
     def products(page: -1)
       Product.from_website_page(url, page: page, products_count: products_count) if url
     end
-
   end
 end
