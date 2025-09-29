@@ -15,10 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GEM_NAME: openfoodfacts
-    permissions:
-      contents: write
-      id-token: write
-      pull-requests: write
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v4
         id: release

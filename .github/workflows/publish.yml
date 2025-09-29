@@ -3,18 +3,15 @@ name: Publish gem on Rubygems
 on:
   workflow_dispatch:
   release:
-    types: [published]
+    types: [created]
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     environment: release
     steps:
       - uses: actions/checkout@v5
