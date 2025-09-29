@@ -2,6 +2,10 @@ name: "RuboCop"
 
 on: [push]
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   rubocop:
     runs-on: ubuntu-latest
