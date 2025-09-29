@@ -27,6 +27,14 @@ class TestOpenfoodfacts < Minitest::Test
     end
   end
 
+  # PeriodAfterOpening
+
+  def test_it_fetches_period_after_opening
+    VCR.use_cassette('period_after_openings') do
+      refute_empty ::Openfoodfacts::PeriodAfterOpening.all(locale: 'fr')
+    end
+  end
+
   # Product
 
   def test_it_returns_product_url
@@ -313,6 +321,14 @@ class TestOpenfoodfacts < Minitest::Test
   def test_it_fetches_faq
     VCR.use_cassette('faq') do
       refute_empty ::Openfoodfacts::Faq.items(locale: 'fr')
+    end
+  end
+
+  # Ingredient
+
+  def test_it_fetches_ingredient
+    VCR.use_cassette('ingredients') do
+      refute_empty ::Openfoodfacts::Ingredient.all(locale: 'fr')
     end
   end
 
