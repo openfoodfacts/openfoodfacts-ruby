@@ -6,7 +6,7 @@ on:
     types: [created]
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 jobs:
