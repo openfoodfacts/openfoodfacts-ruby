@@ -15,6 +15,9 @@ jobs:
     environment: release
     steps:
       - uses: actions/checkout@v5
+        with: # Load existing tags to avoid duplicate tag error
+          fetch-depth: 0
+          fetch-tags: true
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ vars.RUBY_VERSION }}
