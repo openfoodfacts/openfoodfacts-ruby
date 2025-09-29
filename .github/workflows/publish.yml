@@ -1,0 +1,28 @@
+name: Publish gem on Rubygems
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment: release
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ vars.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Build gem
+        run: gem build *.gemspec
+      - name: Publish gem
+        uses: rubygems/release-gem@v1
