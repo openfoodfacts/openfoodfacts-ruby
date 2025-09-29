@@ -11,6 +11,13 @@
 * Update API paths ([d383f5b](https://github.com/openfoodfacts/openfoodfacts-ruby/commit/d383f5b90744d443860407a942a5a16dc270cac4))
 
 
+## [0.10.0](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.9.0...v0.10.0) (2025-09-29)
+
+
+### Features
+
+* make wrapper generic with more paths ([adb0e6e](https://github.com/openfoodfacts/openfoodfacts-ruby/commit/adb0e6e65ae21b90d71103d175c37623ffb609e8))
+
 ## [0.6.2](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.6.2...v0.6.0) (2022-02-13)
 
 
