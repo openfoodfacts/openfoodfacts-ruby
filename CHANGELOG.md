@@ -1,3 +1,16 @@
+## [0.9.0](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.9.0...v0.6.2) (2025-09-29)
+
+
+### Features
+
+* Allow to pass a custom User-Agent ([e4e70f4](https://github.com/openfoodfacts/openfoodfacts-ruby/commit/e4e70f4e1b0ba208e7aff87c5a6c6dd7b7384ec4))
+
+
+### Bug Fixes
+
+* Update API paths ([d383f5b](https://github.com/openfoodfacts/openfoodfacts-ruby/commit/d383f5b90744d443860407a942a5a16dc270cac4))
+
+
 ## [0.6.2](https://github.com/openfoodfacts/openfoodfacts-ruby/compare/v0.6.2...v0.6.0) (2022-02-13)
 
 
