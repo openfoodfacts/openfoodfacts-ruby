@@ -1,9 +1,0 @@
-{
-  "packages": {
-    ".": {
-      "release-type": "ruby",
-      "package-name": "openfoodfacts",
-      "version-file": "lib/openfoodfacts/version.rb"
-    }
-  }
-}
