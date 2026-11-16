@@ -14,15 +14,15 @@ jobs:
     runs-on: ubuntu-slim
     environment: release
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with: # Load existing tags to avoid duplicate tag error
           fetch-depth: 0
           fetch-tags: true
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1.338.0
         with:
           ruby-version: ${{ vars.RUBY_VERSION }}
           bundler-cache: true
       - name: Build gem
         run: gem build *.gemspec
       - name: Publish gem
-        uses: rubygems/release-gem@v1
+        uses: rubygems/release-gem@v1.4.2
