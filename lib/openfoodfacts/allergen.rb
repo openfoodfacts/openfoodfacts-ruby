@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents an allergen tag on Open Food Facts.
   class Allergen < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

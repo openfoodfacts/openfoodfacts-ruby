@@ -35,6 +35,7 @@ require 'json'
 require 'nokogiri'
 require 'open-uri'
 
+# Open Food Facts Ruby API wrapper.
 module Openfoodfacts
   DEFAULT_LOCALE = Locale::GLOBAL
   DEFAULT_DOMAIN = 'openfoodfacts.org'

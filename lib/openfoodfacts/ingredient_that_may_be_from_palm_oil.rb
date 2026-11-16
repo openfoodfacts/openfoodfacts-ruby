@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents an ingredient that may be from palm oil on Open Food Facts.
   class IngredientThatMayBeFromPalmOil < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

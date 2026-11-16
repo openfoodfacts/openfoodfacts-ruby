@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'time'
 
 module Openfoodfacts
+  # Represents press coverage entries on Open Food Facts.
   class Press < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {
@@ -17,32 +18,30 @@ module Openfoodfacts
 
     class << self
       def items(locale: 'fr', domain: DEFAULT_DOMAIN)
-        if (path = LOCALE_PATHS[locale])
-          date_format = LOCALE_DATE_FORMATS[locale]
+        return unless (path = LOCALE_PATHS[locale])
 
-          html = Openfoodfacts.http_get("https://#{locale}.#{domain}/#{path}").read
-          dom = Nokogiri::HTML.fragment(html)
+        date_format = LOCALE_DATE_FORMATS[locale]
+        html = Openfoodfacts.http_get("https://#{locale}.#{domain}/#{path}").read
+        Nokogiri::HTML.fragment(html).css('#press_table tbody tr').map { |item| parse_item(item, date_format) }
+      end
 
-          titles = dom.css('#press_table tbody tr')
-          titles.each_with_index.map do |item, _index|
-            colums = item.css('td')
+      private
 
-            link = colums[1].css('a')
-            attributes = {
-              'type' => colums[0].text,
-              'title' => colums[1].text.strip,
-              'url' => link&.attr('href')&.value,
-              'source' => colums[2].text.strip,
-              'date' => begin
-                DateTime.strptime(colums[3].text, date_format)
-              rescue StandardError
-                nil
-              end
-            }
+      def parse_item(item, date_format)
+        type_col, title_col, source_col, date_col = item.css('td')
+        new(
+          'type' => type_col.text,
+          'title' => title_col.text.strip,
+          'url' => title_col.css('a')&.attr('href')&.value,
+          'source' => source_col.text.strip,
+          'date' => parse_date(date_col.text, date_format)
+        )
+      end
 
-            new(attributes)
-          end
-        end
+      def parse_date(text, date_format)
+        DateTime.strptime(text, date_format)
+      rescue StandardError
+        nil
       end
     end
   end

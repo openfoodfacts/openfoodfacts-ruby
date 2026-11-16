@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents an entry date tag on Open Food Facts.
   class EntryDate < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

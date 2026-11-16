@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents a contributor tag on Open Food Facts.
   class Contributor < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

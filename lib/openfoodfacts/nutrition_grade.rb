@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents a nutrition grade tag on Open Food Facts.
   class NutritionGrade < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

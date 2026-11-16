@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents a packager code tag on Open Food Facts.
   class PackagerCode < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {
