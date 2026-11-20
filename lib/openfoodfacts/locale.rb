@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Openfoodfacts
+  # Represents a locale on Open Food Facts.
   class Locale < String
     GLOBAL = 'world'
 

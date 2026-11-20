@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents a last edit date tag on Open Food Facts.
   class LastEditDate < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

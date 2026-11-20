@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents a purchase place tag on Open Food Facts.
   class PurchasePlace < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {

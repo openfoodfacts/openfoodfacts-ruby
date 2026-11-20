@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents an additive tag on Open Food Facts.
   class Additive < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {
@@ -16,25 +17,30 @@ module Openfoodfacts
       # Get additives
       #
       def all(locale: DEFAULT_LOCALE, domain: DEFAULT_DOMAIN)
-        if (path = LOCALE_PATHS[locale])
-          page_url = "https://#{locale}.#{domain}/facets/#{path}"
+        return unless (path = LOCALE_PATHS[locale])
 
-          Product.tags_from_page(self, page_url) do |tag|
-            columns = tag.css('td')
+        page_url = "https://#{locale}.#{domain}/facets/#{path}"
+        Product.tags_from_page(self, page_url) { |tag| parse_tag(tag, page_url) }
+      end
 
-            link = tag.css('a').first
-            attributes = {
-              'name' => link.text.strip,
-              'url' => URI.join(page_url, link.attr('href')).to_s,
-              'products_count' => columns[1].text.to_i
-            }
+      private
 
-            riskiness = columns.last.attr('class')
-            attributes['riskiness'] = riskiness[/level_(\d+)/, 1].to_i if riskiness
+      def parse_tag(tag, page_url)
+        columns = tag.css('td')
+        link = tag.css('a').first
+        attributes = {
+          'name' => link.text.strip,
+          'url' => URI.join(page_url, link.attr('href')).to_s,
+          'products_count' => columns[1].text.to_i
+        }
+        riskiness = extract_riskiness(columns.last)
+        attributes['riskiness'] = riskiness if riskiness
+        new(attributes)
+      end
 
-            new(attributes)
-          end
-        end
+      def extract_riskiness(column)
+        riskiness = column.attr('class')
+        riskiness[/level_(\d+)/, 1].to_i if riskiness
       end
     end
 

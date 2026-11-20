@@ -3,6 +3,7 @@
 require 'hashie'
 
 module Openfoodfacts
+  # Represents a period after opening tag on Open Food Facts.
   class PeriodAfterOpening < Hashie::Mash
     # TODO: Add more locales
     LOCALE_PATHS = {
