@@ -10,7 +10,7 @@ workflows:
     '.github/workflows/publish.yml':
         - 'actions/checkout@v7.0.1'
         - 'ruby/setup-ruby@v1.338.0'
-        - 'rubygems/release-gem@v1.4.2'
+        - 'rubygems/release-gem@v1.5.0'
     '.github/workflows/release-please.yml':
         - 'googleapis/release-please-action@v5.0.0'
     '.github/workflows/rubocop-analysis.yml':
@@ -53,18 +53,18 @@ dependencies:
         commit: 'sha1-b3aaceaef7e0ee231b499e7b5f49c03fc1d32199'
         owner_id: 210414
         repo_id: 231208785
-    'rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a':
-        ref: 'v2.1.0'
-        commit: 'sha1-dc5a8d8553e6ee01fc26761a49e99e733d17954a'
+    'rubygems/configure-rubygems-credentials@c6ca7f4bac0e29c9bde8eeae0a0a986b27efa05f':
+        ref: 'v2.2.0'
+        commit: 'sha1-c6ca7f4bac0e29c9bde8eeae0a0a986b27efa05f'
         owner_id: 208761
         repo_id: 631633510
-    'rubygems/release-gem@v1.4.2':
-        ref: 'v1.4.2'
-        commit: 'sha1-5c53f5308233b7c0f47411f0471b3faae6fa57b2'
+    'rubygems/release-gem@v1.5.0':
+        ref: 'v1.5.0'
+        commit: 'sha1-2654a0fe0dc39725c07fe84d7fe863a084f2424e'
         owner_id: 208761
         repo_id: 731435765
         uses:
-            - 'rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a'
+            - 'rubygems/configure-rubygems-credentials@c6ca7f4bac0e29c9bde8eeae0a0a986b27efa05f'
     'toshimaru/auto-author-assign@v3.1.1':
         ref: 'v3.1.1'
         commit: 'sha1-415448809ea5ba0e171b251632720b009df3d8d6'
