@@ -25,4 +25,4 @@ jobs:
       - name: Build gem
         run: gem build *.gemspec
       - name: Publish gem
-        uses: rubygems/release-gem@v1.4.2
+        uses: rubygems/release-gem@v1.5.0
